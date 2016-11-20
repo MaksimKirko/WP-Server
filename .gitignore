@@ -1,2 +1,4 @@
 .idea/workspace.xml
 .idea/
+target/wpserver-1.0-SNAPSHOT/WEB-INF/lib/
+target/

@@ -1,25 +1,58 @@
 package com.github.maximkirko.wpserver.datamodel;
 
-import com.github.maximkirko.wpserver.datamodel.violations.Violation;
-
-import java.io.File;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
+import static javax.persistence.GenerationType.IDENTITY;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * Created by Pavel on 25.09.2016.
  */
-public class Ticket {
+@Entity
+@Table(name = "ticket")
+public class Ticket implements java.io.Serializable {
+
 
     private Long id;
-    private List<Photo> violationPhotos;
-    private Violation violation;
+    //private List<Photo> violationPhotos;
+
+//    @Column(name = "violation_id", unique = true, nullable = false, length = 15)
+//    private Violation violation;
+
+
     private String licensePlate;
+
+
     private String address;
-    private Coords location;
+
+
+    private String location;
+
+
     private Date date;
+
+
     private String comment;
 
+
+    private Set<User> users;
+
+    @Id
+    @GeneratedValue(strategy = IDENTITY)
+    @Column(name = "id", unique = true, nullable = false)
     public Long getId() {
         return id;
     }
@@ -28,22 +61,23 @@ public class Ticket {
         this.id = id;
     }
 
-    public List<Photo> getViolationPhotos() {
-        return violationPhotos;
-    }
+//    public List<Photo> getViolationPhotos() {
+//        return violationPhotos;
+//    }
+//
+//    public void setViolationPhotos(List<Photo> violationPhotos) {
+//        this.violationPhotos = violationPhotos;
+//    }
 
-    public void setViolationPhotos(List<Photo> violationPhotos) {
-        this.violationPhotos = violationPhotos;
-    }
+//    public Violation getViolation() {
+//        return violation;
+//    }
+//
+//    public void setViolation(Violation violation) {
+//        this.violation = violation;
+//    }
 
-    public Violation getViolation() {
-        return violation;
-    }
-
-    public void setViolation(Violation violation) {
-        this.violation = violation;
-    }
-
+    @Column(name = "license_plate", length = 15)
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -52,6 +86,7 @@ public class Ticket {
         this.licensePlate = licensePlate;
     }
 
+    @Column(name = "address", length = 100)
     public String getAddress() {
         return address;
     }
@@ -60,14 +95,16 @@ public class Ticket {
         this.address = address;
     }
 
-    public Coords getLocation() {
+    @Column(name = "coords", length = 100)
+    public String getLocation() {
         return location;
     }
 
-    public void setLocation(Coords location) {
+    public void setLocation(String location) {
         this.location = location;
     }
 
+    @Column(name = "date", length = 15)
     public Date getDate() {
         return date;
     }
@@ -76,12 +113,22 @@ public class Ticket {
         this.date = date;
     }
 
+    @Column(name = "comment", length = 100)
     public String getComment() {
         return comment;
     }
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tickets")
+    public Set<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 
     public Ticket() {
