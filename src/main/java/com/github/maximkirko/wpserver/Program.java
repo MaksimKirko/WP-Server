@@ -1,6 +1,6 @@
-package com.github.maximkirko.mavenwebapptest;
+package com.github.maximkirko.wpserver;
 
-import com.github.maximkirko.mavenwebapptest.models.violations.ParkingOnWalkway;
+import com.github.maximkirko.wpserver.models.violations.ParkingOnWalkway;
 
 /**
  * Created by Pavel on 12.10.2016.

@@ -1,6 +1,6 @@
-package com.github.maximkirko.mavenwebapptest.models;
+package com.github.maximkirko.wpserver.datamodel;
 
-import com.github.maximkirko.mavenwebapptest.models.violations.Violation;
+import com.github.maximkirko.wpserver.datamodel.violations.Violation;
 
 import java.io.File;
 import java.util.Date;
@@ -11,7 +11,8 @@ import java.util.List;
  */
 public class Ticket {
 
-    private List<File> violationPhotos;
+    private Long id;
+    private List<Photo> violationPhotos;
     private Violation violation;
     private String licensePlate;
     private String address;
@@ -19,11 +20,19 @@ public class Ticket {
     private Date date;
     private String comment;
 
-    public List<File> getViolationPhotos() {
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Photo> getViolationPhotos() {
         return violationPhotos;
     }
 
-    public void setViolationPhotos(List<File> violationPhotos) {
+    public void setViolationPhotos(List<Photo> violationPhotos) {
         this.violationPhotos = violationPhotos;
     }
 
@@ -76,15 +85,7 @@ public class Ticket {
     }
 
     public Ticket() {
+
     }
 
-    public Ticket(List<File> violationPhotos, Violation violation, String licensePlate, String address, Coords location, Date date, String comment) {
-        this.violationPhotos = violationPhotos;
-        this.violation = violation;
-        this.licensePlate = licensePlate;
-        this.address = address;
-        this.location = location;
-        this.date = date;
-        this.comment = comment;
-    }
 }

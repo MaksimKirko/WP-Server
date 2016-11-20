@@ -1,9 +1,10 @@
-package com.github.maximkirko.mavenwebapptest.models.violations;
+package com.github.maximkirko.wpserver.datamodel.violations;
 
 /**
  * Created by Pavel on 25.09.2016.
  */
-public class ParkingUnderSign extends Violation{
+public class ParkingUnderSign extends Violation {
+
     public ParkingUnderSign() {
             setDescription("143.1. В зоне действия соответственно дорожных знаков «Остановка запрещена»," +
                     " «Стоянка запрещена», «Стоянка запрещена по нечетным числам месяца»," +
@@ -11,6 +12,6 @@ public class ParkingUnderSign extends Violation{
         }
 
     public Enum getType() {
-        return Violations.ParkingUnderSign;
+        return ViolationType.ParkingUnderSign;
     }
 }

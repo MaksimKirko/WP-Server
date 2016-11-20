@@ -1,10 +1,11 @@
-package com.github.maximkirko.mavenwebapptest.management;
+package com.github.maximkirko.wpserver.datamodel.actions;
 
 
 /**
  * Created by MadMax on 28.09.2016.
  */
 public class CallATowTrack implements IAction {
+
     public CallATowTrack() {
 
     }

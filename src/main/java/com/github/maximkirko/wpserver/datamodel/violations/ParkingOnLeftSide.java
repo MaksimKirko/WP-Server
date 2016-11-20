@@ -1,9 +1,9 @@
-package com.github.maximkirko.mavenwebapptest.models.violations;
+package com.github.maximkirko.wpserver.datamodel.violations;
 
 /**
  * Created by Pavel on 04.10.2016.
  */
-public class ParkingOnLeftSide extends Violation{
+public class ParkingOnLeftSide extends Violation {
     public ParkingOnLeftSide() {
             setDescription("на левой стороне дороги, за исключением случаев, указанных в подпункте 138.3\" +\n" +
                     "            \" пункта 138 настоящих Правил;\\n\" +\n" +
@@ -23,6 +23,6 @@ public class ParkingOnLeftSide extends Violation{
         }
 
     public Enum getType() {
-        return Violations.ParkingOnLeftSide;
+        return ViolationType.ParkingOnLeftSide;
     }
 }

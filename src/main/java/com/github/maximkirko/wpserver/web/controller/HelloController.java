@@ -1,4 +1,4 @@
-package com.github.maximkirko.mavenwebapptest.web.controller;
+package com.github.maximkirko.wpserver.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

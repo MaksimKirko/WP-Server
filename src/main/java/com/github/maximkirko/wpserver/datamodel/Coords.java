@@ -1,4 +1,4 @@
-package com.github.maximkirko.mavenwebapptest.models;
+package com.github.maximkirko.wpserver.datamodel;
 
 /**
  * Created by Pavel on 25.09.2016.
@@ -17,16 +17,16 @@ public class Coords {
         this.y = y;
     }
 
-    public double X() {
-        return this.x;
-    }
-
-    public double Y() {
-        return this.y;
+    public double getX() {
+        return x;
     }
 
     public void setX(double x) {
         this.x = x;
+    }
+
+    public double getY() {
+        return y;
     }
 
     public void setY(double y) {
@@ -35,10 +35,14 @@ public class Coords {
 
     @Override
     public String toString() {
-        return this.X() + " " + this.Y();
+        return "Coords{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
     }
 
     public static Coords getCoordsFromString(String line) {
+
         String[] mas = line.split(",");
         Coords coords = new Coords();
         coords.x = Double.parseDouble(mas[0]);
