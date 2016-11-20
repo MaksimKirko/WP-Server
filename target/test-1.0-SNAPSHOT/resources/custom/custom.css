@@ -1,0 +1,19 @@
+
+#topTools
+{
+    margin-top: 10px;
+    margin-left: 70%;
+}
+#authForm
+{
+    width: 200px;
+    margin: auto;
+    padding: 10px;
+    border: 2px dashed darkslategrey;
+    border-radius: 5px;
+}
+#submitBtn
+{
+    margin: 8px;
+    margin-left: 0px;
+}
