@@ -24,17 +24,43 @@
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
 
     <title>Application</title>
+
+    <style>
+        .h2 {margin-left: 700px}
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="btn-toolbar" id="topTools">
-            <div class="btn-group">
-                <button class="btn btn-default">x</button>
-                <button class="btn btn-default">y</button>
-                <button class="btn btn-default">x</button>
-            </div>
-        </div>
-        <ul class="nav nav-tabs" id="myTab">
+        <%--<div class="btn-toolbar" id="topTools">--%>
+            <%--<div class="btn-group">--%>
+                <%--<button class="btn btn-default">x</button>--%>
+                <%--<button class="btn btn-default">y</button>--%>
+                <%--<button class="btn btn-default">x</button>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+            <c:url value="/j_spring_security_logout" var="logoutUrl" />
+
+            <!-- csrf for log out-->
+            <form action="${logoutUrl}" method="post" id="logoutForm">
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}" />
+            </form>
+
+            <script>
+                function formSubmit() {
+                    document.getElementById("logoutForm").submit();
+                }
+            </script>
+
+            <c:if test="${pageContext.request.userPrincipal.name != null}">
+                <div class="h2">
+                    Здравствуйте : ${pageContext.request.userPrincipal.name} | <a
+                        href="javascript:formSubmit()">Выйти</a>
+                </div>
+            </c:if>
+
+        <ul class="nav nav-tabs" id="myTab" >
             <li class="active">
                 <a href="#inputTickets" data-toggle="tab" >Входящие заявки</a>
             </li>

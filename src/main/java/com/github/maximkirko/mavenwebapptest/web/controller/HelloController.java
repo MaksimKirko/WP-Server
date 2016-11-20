@@ -16,8 +16,8 @@ public class HelloController {
     public ModelAndView welcomePage() {
 
         ModelAndView model = new ModelAndView();
-        model.addObject("title", "Spring Security Hello World");
-        model.addObject("message", "This is welcome page!");
+        /*model.addObject("title", "Spring Security Hello World");
+        model.addObject("message", "This is welcome page!");*/
         model.setViewName("hello");
         return model;
 
@@ -42,11 +42,11 @@ public class HelloController {
 
         ModelAndView model = new ModelAndView();
         if (error != null) {
-            model.addObject("error", "Invalid username and password!");
+            model.addObject("error", "Неверное имя пользователя или пароль!");
         }
 
         if (logout != null) {
-            model.addObject("msg", "You've been logged out successfully.");
+            model.addObject("msg", "Вы успешно вышли из аккаунта.");
         }
         model.setViewName("login");
 
