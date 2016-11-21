@@ -17,44 +17,22 @@ import java.util.*;
 public class Program {
     public static void main(String[] args) {
 
-//        User user = new User();
-//        user.setLogin("pasha");
-//        user.setPassword("123");
-//
-//        UserDao userDao = new UserDao();
-//
-//        userDao.save(user);
-
-        System.out.println("Hibernate many to many (Annotation)");
-
-        Session session = HibernateUtil.getSessionFactory().openSession();
-
-        session.beginTransaction();
-
         User user = new User();
-        user.setLogin("pasha");
-        user.setPassword("123");
-
-
+        user.setLogin("maks");
+        user.setPassword("qwe");
 
         Ticket ticket = new Ticket();
         ticket.setLicensePlate("AHGSDF");
         ticket.setDate(new Date());
         ticket.setLocation("1, 2");
 
-//        List<User> users = new ArrayList<User>();
-//        users.add(user);
-//        ticket.setUsers(users);
-
         Set<Ticket> tickets = new HashSet<Ticket>();
         tickets.add(ticket);
         user.setTickets(tickets);
 
-        session.save(user);
+        UserDao userDao = new UserDao();
 
-        session.getTransaction().commit();
-
-        System.out.println("Done");
+        userDao.save(user);
 
     }
 }
