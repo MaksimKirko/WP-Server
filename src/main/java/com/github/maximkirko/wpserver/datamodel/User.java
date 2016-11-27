@@ -22,19 +22,12 @@ import static javax.persistence.GenerationType.SEQUENCE;
  */
 @Entity
 @Table(name = "\"user\"", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "login") })
+        @UniqueConstraint(columnNames = "login")})
 public class User implements java.io.Serializable {
 
-
     private Long id;
-
-
     private String login;
-
-
     private String password;
-
-
     private Set<Ticket> tickets;
 
     @Id
@@ -68,15 +61,25 @@ public class User implements java.io.Serializable {
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "user_2_ticket", joinColumns = {
-            @JoinColumn(name = "user_id", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "ticket_id",
-                    nullable = false, updatable = false) })
+            @JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "ticket_id",
+                    nullable = false, updatable = false)})
     public Set<Ticket> getTickets() {
         return tickets;
     }
 
     public void setTickets(Set<Ticket> tickets) {
         this.tickets = tickets;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", tickets=" + tickets +
+                '}';
     }
 
     public User() {
