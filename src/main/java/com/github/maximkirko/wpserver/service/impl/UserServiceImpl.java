@@ -28,6 +28,11 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
+    public List<User> getAll() {
+        return userDao.getAll();
+    }
+
+    @Override
     public Long save(User user) {
 
         Long id = null;

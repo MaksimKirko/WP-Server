@@ -13,6 +13,8 @@ public interface IUserService {
 
     User getByLogin(String login);
 
+    List<User> getAll();
+
     Long save(User user);
 
     void saveAll(List<User> userList);

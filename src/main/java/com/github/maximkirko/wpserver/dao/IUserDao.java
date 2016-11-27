@@ -7,6 +7,7 @@ import java.util.List;
 /**
  * Created by MadMax on 27.11.2016.
  */
+
 public interface IUserDao {
 
     User getById(Long id);
