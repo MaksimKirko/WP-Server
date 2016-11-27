@@ -29,6 +29,25 @@
 
     <style>
         .h2 {margin-left: 700px}
+
+        body{
+            padding:50px;
+        }
+        .btn-group {
+            white-space: nowrap;
+        }
+        .btn-group .btn {
+            float: none;
+            display: inline-block;
+        }
+        .btn + .dropdown-toggle {
+            margin-left: -4px;
+        }
+
+        .table-responsive {
+            overflow-x: visible !important;
+            overflow-y: visible !important;
+        }
     </style>
 </head>
 <body>
@@ -77,7 +96,7 @@
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <div class="h2">
-                    Здравствуйте : ${pageContext.request.userPrincipal.name} | <a
+                    Здравствуйте, ${pageContext.request.userPrincipal.name} | <a
                         href="javascript:formSubmit()">Выйти</a>
                 </div>
             </c:if>
@@ -92,30 +111,72 @@
                 <a href="#archivedTickets" data-toggle="tab" >Архив заявок</a>
             </li>
         </ul>
-        <div class="tab-content">
+        <div class="tab-content table-responsive">
             <div class="tab-pane active" id="inputTickets">
                 <table class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
-                        <th class="">Заявка1</th>
-                        <th class="">Фотографии</th>
+                        <th class=""></th>
+                        <th class="id">ID</th>
                         <th class="">Вид нарушения</th>
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
-                        <th class="">Комментарий</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${tickets}" var="item">
-                        <tr>
+                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
+                            aria-expanded="false">
+                            <td>
+                                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" contenteditable="false"></span>
+
+                                </button>
+                            </td>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="photos">...</td>
                             <td class="violation">...</td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
-                            <td class="address">...</td>
-                            <td class="date">...</td>
-                            <td class="comment"><c:out value="${item.comment}"/></td>
+                            <td class="address"><c:out value="${item.address}"/></td>
+                            <td class="date"><c:out value="${item.date}"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" class="hiddenRow">
+                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false"
+                                     style="height: 0px;">
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <td><a href="WorkloadURL" class="">Workload link</a>
+
+                                            </td>
+                                            <td class="">Bandwidth: Dandwidth Details</td>
+                                            <td class="">OBS Endpoint: end point</td>
+                                        </tr>
+                                        <tr>
+                                            <th class="">Access Key</th>
+                                            <th class="">Secret Key</th>
+                                            <th class="">Status</th>
+                                            <th class="">Created</th>
+                                            <th class="">Expires</th>
+                                            <th class="">Actions</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="">access-key-1</td>
+                                            <td class="">secretKey-1</td>
+                                            <td class="">Status</td>
+                                            <td class="">some date</td>
+                                            <td class="">some date</td>
+                                            <td><a href="#" class="btn btn-default btn-sm">
+                                                <i class="glyphicon glyphicon-cog"></i></a>
+
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
                         </tr>
                     </c:forEach>
                     </tbody>
