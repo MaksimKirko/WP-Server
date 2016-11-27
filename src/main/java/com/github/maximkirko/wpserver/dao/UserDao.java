@@ -19,7 +19,7 @@ public class UserDao {
 
     public UserDao() {
 
-        session = HibernateUtil.getSessionFactory().openSession();
+        //session = HibernateUtil.getSessionFactory().openSession();
     }
 
     public void save(User user) {

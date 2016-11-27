@@ -1,3 +1,5 @@
+<%@ page import="com.github.maximkirko.wpserver.datamodel.Ticket" %>
+<%@ page import="java.util.*" %>
 <%--
   Created by IntelliJ IDEA.
   User: Pavel
@@ -53,13 +55,32 @@
                 }
             </script>
 
+            <%--Creation of the "tickets" collection--%>
+            <jsp:useBean id="ticket" class="com.github.maximkirko.wpserver.datamodel.Ticket" scope="page"/>
+            <%
+                List<Ticket> tickets = new ArrayList<Ticket>();
+
+                ticket.setId((long)1);
+                ticket.setLicensePlate("1234 AB-1");
+                ticket.setComment("абвгд");
+                tickets.add(ticket);
+                ticket = new Ticket();
+
+                ticket.setId((long)2);
+                ticket.setLicensePlate("9876 AB-2");
+                ticket.setComment("jhgf");
+                tickets.add(ticket);
+
+                request.setAttribute("tickets", tickets);
+            %>
+
+
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <div class="h2">
                     Здравствуйте : ${pageContext.request.userPrincipal.name} | <a
                         href="javascript:formSubmit()">Выйти</a>
                 </div>
             </c:if>
-
         <ul class="nav nav-tabs" id="myTab" >
             <li class="active">
                 <a href="#inputTickets" data-toggle="tab" >Входящие заявки</a>
@@ -86,15 +107,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                    </tr>
+                    <c:forEach items="${tickets}" var="item">
+                        <tr>
+                            <td class="id"><c:out value="${item.id}"/></td>
+                            <td class="photos">...</td>
+                            <td class="violation">...</td>
+                            <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
+                            <td class="address">...</td>
+                            <td class="date">...</td>
+                            <td class="comment"><c:out value="${item.comment}"/></td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
