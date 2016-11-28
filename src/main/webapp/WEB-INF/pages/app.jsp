@@ -28,8 +28,13 @@
     <title>Application</title>
 
     <style>
-        .h2 {margin-left: 700px}
+        #user {
+            margin-left: 700px;
+        }
 
+        #controls {
+            margin-left: 700px;
+        }
         body{
             padding:50px;
         }
@@ -77,25 +82,28 @@
             <%--Creation of the "tickets" collection--%>
             <jsp:useBean id="ticket" class="com.github.maximkirko.wpserver.datamodel.Ticket" scope="page"/>
             <%
-                List<Ticket> tickets = new ArrayList<Ticket>();
+                List<Ticket> inputTickets = new ArrayList<Ticket>();
+                List<Ticket> handledTickets = new ArrayList<Ticket>();
+                List<Ticket> archivedTickets = new ArrayList<Ticket>();
 
                 ticket.setId((long)1);
                 ticket.setLicensePlate("1234 AB-1");
                 ticket.setComment("абвгд");
-                tickets.add(ticket);
+                inputTickets.add(ticket);
                 ticket = new Ticket();
 
                 ticket.setId((long)2);
                 ticket.setLicensePlate("9876 AB-2");
                 ticket.setComment("jhgf");
-                tickets.add(ticket);
+                inputTickets.add(ticket);
 
-                request.setAttribute("tickets", tickets);
+
+                request.setAttribute("inputTickets", inputTickets);
             %>
 
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <div class="h2">
+                <div id="user">
                     Здравствуйте, ${pageContext.request.userPrincipal.name} | <a
                         href="javascript:formSubmit()">Выйти</a>
                 </div>
@@ -116,7 +124,6 @@
                 <table class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
-                        <th class=""></th>
                         <th class="id">ID</th>
                         <th class="">Вид нарушения</th>
                         <th class="">Номерной знак</th>
@@ -125,52 +132,186 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${tickets}" var="item">
+                    <c:forEach items="${inputTickets}" var="item">
                         <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
                             aria-expanded="false">
-                            <td>
-                                <button class="btn btn-default btn-xs"><span class="glyphicon glyphicon-eye-open" contenteditable="false"></span>
 
-                                </button>
-                            </td>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violations">...</td>
+                            <td class="violation"></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>
                         </tr>
                         <tr>
                             <td colspan="12" class="hiddenRow">
-                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false"
-                                     style="height: 0px;">
-                                    <table class="table table-striped">
+                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
+                                    <table class="table table-bordered">
                                         <thead>
                                         <tr>
-                                            <td><a href="WorkloadURL" class="">Workload link</a>
-
-                                            </td>
-                                            <td class="">Bandwidth: Dandwidth Details</td>
-                                            <td class="">OBS Endpoint: end point</td>
-                                        </tr>
-                                        <tr>
-                                            <th class="">Access Key</th>
-                                            <th class="">Secret Key</th>
-                                            <th class="">Status</th>
-                                            <th class="">Created</th>
-                                            <th class="">Expires</th>
-                                            <th class="">Actions</th>
+                                            <th class="">Фото №1</th>
+                                            <th class="">Фото №2</th>
+                                            <th class="">Фото №3</th>
+                                            <th class="">Вид нарушения</th>
+                                            <th class="">Действия</th>
+                                            <th class="">Комментарий</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td class="">access-key-1</td>
-                                            <td class="">secretKey-1</td>
-                                            <td class="">Status</td>
-                                            <td class="">some date</td>
-                                            <td class="">some date</td>
-                                            <td><a href="#" class="btn btn-default btn-sm">
-                                                <i class="glyphicon glyphicon-cog"></i></a>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">
+                                                <div class="btn-group">
+                                                    <select class="">
+                                                        <option value="">Парковка на остановке</option>
+                                                        <option value="">Парковка на/у железной дороги</option>
+                                                        <option value="">Парковка у магазина</option>
+                                                        <option value="">Парковка на мосту/эстакаде</option>
+                                                        <option value="">Парковка на перекрестке</option>
+                                                        <option value="">Парковка на газоне</option>
+                                                        <option value="">парковка у левой обочины</option>
+                                                        <option value="">Парковка на тротуаре</option>
+                                                        <option value="">Парковка под знаком</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">Action</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a>
+                                                        </li>
+                                                        <li><a href="#">Another action</a>
+                                                        </li>
+                                                        <li><a href="#">Something else here</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class=""></td>
 
+                                        </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <div class="btn-group" id="controls">
+                                        <button type="button" class="btn btn-danger">Action</button>
+                                        <button type="button" class="btn btn-danger dropdown-toggle"
+                                                data-toggle="dropdown">
+                                            <span class="caret"></span>
+                                            <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Action</a>
+                                            </li>
+                                            <li><a href="#">Another action</a>
+                                            </li>
+                                            <li><a href="#">Something else here</a>
+                                            </li>
+                                            <li class="divider"></li>
+                                            <li><a href="#">Separated link</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
+            </div>
+            <div class="tab-pane" id="handledTickets">
+                <table class="table table-striped table-bordered table-hover" style="">
+                    <thead>
+                    <tr>
+                        <th class="id">ID</th>
+                        <th class="">Вид нарушения</th>
+                        <th class="">Номерной знак</th>
+                        <th class="">Адрес места нарушения</th>
+                        <th class="">Дата</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${handledTickets}" var="item">
+                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
+                            aria-expanded="false">
+
+                            <td class="id"><c:out value="${item.id}"/></td>
+                            <td class="violation">...</td>
+                            <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
+                            <td class="address"><c:out value="${item.address}"/></td>
+                            <td class="date"><c:out value="${item.date}"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" class="hiddenRow">
+                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="">Фото №1</th>
+                                            <th class="">Фото №2</th>
+                                            <th class="">Фото №3</th>
+                                            <th class="">Вид нарушения</th>
+                                            <th class="">Комментарий</th>
+                                            <th class="">Действия</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">Action</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown"> <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a>
+                                                        </li>
+                                                        <li><a href="#">Another action</a>
+                                                        </li>
+                                                        <li><a href="#">Something else here</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class=""></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">Action</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a>
+                                                        </li>
+                                                        <li><a href="#">Another action</a>
+                                                        </li>
+                                                        <li><a href="#">Something else here</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                         </tbody>
@@ -182,55 +323,97 @@
                     </tbody>
                 </table>
             </div>
-            <div class="tab-pane" id="handledTickets">
-                <table class="table table-striped table-bordered table-hover">
-                    <thead>
-                    <tr>
-                        <th class="">Заявка2</th>
-                        <th class="">Фотографии</th>
-                        <th class="">Вид нарушения</th>
-                        <th class="">Номерной знак</th>
-                        <th class="">Адрес места нарушения</th>
-                        <th class="">Дата</th>
-                        <th class="">Комментарий</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
             <div class="tab-pane" id="archivedTickets">
-                <table class="table table-striped table-bordered table-hover">
+                <table class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
-                        <th class="">Заявка3</th>
-                        <th class="">Фотографии</th>
+                        <th class="id">ID</th>
                         <th class="">Вид нарушения</th>
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
-                        <th class="">Комментарий</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                        <td class="">..</td>
-                    </tr>
+                    <c:forEach items="${archivedTickets}" var="item">
+                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
+                            aria-expanded="false">
+
+                            <td class="id"><c:out value="${item.id}"/></td>
+                            <td class="violation">...</td>
+                            <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
+                            <td class="address"><c:out value="${item.address}"/></td>
+                            <td class="date"><c:out value="${item.date}"/></td>
+                        </tr>
+                        <tr>
+                            <td colspan="12" class="hiddenRow">
+                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="">Фото №1</th>
+                                            <th class="">Фото №2</th>
+                                            <th class="">Фото №3</th>
+                                            <th class="">Вид нарушения</th>
+                                            <th class="">Комментарий</th>
+                                            <th class="">Действия</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">...</td>
+                                            <td class="">
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">Action</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown"> <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a>
+                                                        </li>
+                                                        <li><a href="#">Another action</a>
+                                                        </li>
+                                                        <li><a href="#">Something else here</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                            <td class=""></td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <button type="button" class="btn btn-danger">Action</button>
+                                                    <button type="button" class="btn btn-danger dropdown-toggle"
+                                                            data-toggle="dropdown">
+                                                        <span class="caret"></span>
+                                                        <span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu" role="menu">
+                                                        <li><a href="#">Action</a>
+                                                        </li>
+                                                        <li><a href="#">Another action</a>
+                                                        </li>
+                                                        <li><a href="#">Something else here</a>
+                                                        </li>
+                                                        <li class="divider"></li>
+                                                        <li><a href="#">Separated link</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
                     </tbody>
                 </table>
             </div>
