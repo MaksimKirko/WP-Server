@@ -21,19 +21,32 @@
 
     <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/custom.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/bootstrap-select.css" />" rel="stylesheet">
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
+    <%--<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
+    <script src="<c:url value="/resources/js/bootstrap-select.js" />"></script>
+    <script>
+        $('.selectpicker').selectpicker({
+        });
+    </script>
 
     <title>Application</title>
 
     <style>
         #user {
-            margin-left: 700px;
+            margin-left: 750px;
         }
-
         #controls {
-            margin-left: 700px;
+            margin-left: 780px;
+        }
+        .violationPick {
+            width: 320px;
+            color: white;
+        }
+        select[title]{
+            color: white;
         }
         body{
             padding:50px;
@@ -57,13 +70,6 @@
 </head>
 <body>
     <div class="container">
-        <%--<div class="btn-toolbar" id="topTools">--%>
-            <%--<div class="btn-group">--%>
-                <%--<button class="btn btn-default">x</button>--%>
-                <%--<button class="btn btn-default">y</button>--%>
-                <%--<button class="btn btn-default">x</button>--%>
-            <%--</div>--%>
-        <%--</div>--%>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
 
             <!-- csrf for log out-->
@@ -163,7 +169,7 @@
                                             <td class="">...</td>
                                             <td class="">
                                                 <div class="btn-group">
-                                                    <select class="">
+                                                    <select class="selectpicker violationPick" title="Выберите одно или несколько нарушений" multiple data-style="btn-info">
                                                         <option value="">Парковка на остановке</option>
                                                         <option value="">Парковка на/у железной дороги</option>
                                                         <option value="">Парковка у магазина</option>
