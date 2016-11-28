@@ -1,4 +1,7 @@
-package com.github.maximkirko.wpserver.datamodel.violations;
+package com.github.maximkirko.wpserver.datamodel.violation.impl;
+
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 
 /**
  * Created by Pavel on 25.09.2016.
@@ -11,7 +14,4 @@ public class ParkingUnderSign extends Violation {
                     " «Стоянка запрещена по четным числам месяца» и (или) линий горизонтальной дорожной разметки 1.4, 1.10.");
         }
 
-    public Enum getType() {
-        return ViolationType.ParkingUnderSign;
-    }
 }

@@ -1,8 +1,8 @@
 package com.github.maximkirko.wpserver.service.impl;
 
-import com.github.maximkirko.wpserver.dao.IUserDao;
+import com.github.maximkirko.wpserver.dao.api.IUserDao;
 import com.github.maximkirko.wpserver.datamodel.User;
-import com.github.maximkirko.wpserver.service.IUserService;
+import com.github.maximkirko.wpserver.service.api.IUserService;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;

@@ -1,24 +1,20 @@
 package com.github.maximkirko.wpserver.dao.impl;
 
-import com.github.maximkirko.wpserver.dao.IUserDao;
+import com.github.maximkirko.wpserver.dao.api.IUserDao;
 import com.github.maximkirko.wpserver.dao.util.HibernateUtil;
 import com.github.maximkirko.wpserver.datamodel.User;
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-public class UserDao implements IUserDao {
+public class UserDaoImpl implements IUserDao {
 
     private Session session;
 
-    public UserDao() {
+    public UserDaoImpl() {
         session = HibernateUtil.getSessionFactory().openSession();
     }
 

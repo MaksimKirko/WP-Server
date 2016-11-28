@@ -15,5 +15,8 @@
         <property name="format_sql">true</property>
         <mapping class="com.github.maximkirko.wpserver.datamodel.User" />
         <mapping class="com.github.maximkirko.wpserver.datamodel.Ticket" />
+        <mapping class="com.github.maximkirko.wpserver.datamodel.violation.Violation" />
+        <mapping class="com.github.maximkirko.wpserver.datamodel.action.Action" />
+
     </session-factory>
 </hibernate-configuration>

@@ -1,4 +1,4 @@
-package com.github.maximkirko.wpserver.dao;
+package com.github.maximkirko.wpserver.dao.api;
 
 import com.github.maximkirko.wpserver.datamodel.User;
 

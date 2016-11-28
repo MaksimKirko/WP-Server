@@ -1,4 +1,7 @@
-package com.github.maximkirko.wpserver.datamodel.violations;
+package com.github.maximkirko.wpserver.datamodel.violation.impl;
+
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 
 /**
  * Created by Pavel on 04.10.2016.
@@ -10,7 +13,4 @@ public class ParkingOnCrossing extends Violation {
                     "имеющих сплошную линию горизонтальной дорожной разметки или сплошную разделительную полосу.");
         }
 
-    public Enum getType() {
-        return ViolationType.ParkingOnCrossing;
-    }
 }

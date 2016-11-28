@@ -1,4 +1,7 @@
-package com.github.maximkirko.wpserver.datamodel.violations;
+package com.github.maximkirko.wpserver.datamodel.violation.impl;
+
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 
 /**
  * Created by Pavel on 04.10.2016.
@@ -22,7 +25,4 @@ public class ParkingOnLeftSide extends Violation {
                     "            \" (вне населенных пунктов разрешается только остановка транспортных средств).");
         }
 
-    public Enum getType() {
-        return ViolationType.ParkingOnLeftSide;
-    }
 }

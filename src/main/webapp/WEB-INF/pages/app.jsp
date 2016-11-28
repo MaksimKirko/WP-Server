@@ -134,7 +134,7 @@
                                 </button>
                             </td>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violation">...</td>
+                            <td class="violations">...</td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>

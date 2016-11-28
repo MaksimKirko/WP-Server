@@ -69,11 +69,11 @@ public class Ticket implements java.io.Serializable {
 //        this.violationPhotos = violationPhotos;
 //    }
 
-//    public Violation getViolation() {
+//    public Violation getViolations() {
 //        return violation;
 //    }
 //
-//    public void setViolation(Violation violation) {
+//    public void setViolations(Violation violation) {
 //        this.violation = violation;
 //    }
 

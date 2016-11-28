@@ -13,7 +13,7 @@ CREATE TABLE "ticket" (
 
 
 
-CREATE TABLE "violation" (
+CREATE TABLE "violations" (
 	"id" serial NOT NULL,
 	"type" character varying(256) NOT NULL UNIQUE,
 	"description" character varying(512) NOT NULL,
@@ -76,9 +76,9 @@ CREATE TABLE "user_2_ticket" (
 
 
 
-ALTER TABLE "ticket" ADD CONSTRAINT "ticket_fk0" FOREIGN KEY ("violation_id") REFERENCES "violation"("id");
+ALTER TABLE "ticket" ADD CONSTRAINT "ticket_fk0" FOREIGN KEY ("violation_id") REFERENCES "violations"("id");
 
-ALTER TABLE "violation" ADD CONSTRAINT "violation_fk0" FOREIGN KEY ("action_id") REFERENCES "action"("id");
+ALTER TABLE "violations" ADD CONSTRAINT "violation_fk0" FOREIGN KEY ("action_id") REFERENCES "action"("id");
 
 
 

@@ -1,9 +1,35 @@
-package com.github.maximkirko.wpserver.datamodel.violations;
+package com.github.maximkirko.wpserver.datamodel.violation;
 
-import com.github.maximkirko.wpserver.datamodel.actions.IAction;
+import com.github.maximkirko.wpserver.datamodel.violation.impl.*;
 
+public enum ViolationEnum {
+        ParkingUnderSign, //143.1
+        ParkingOnCrossing, //143.4
+        ParkingAtBusStop, //143.5
+        ParkingOnBridge, //143.6
+        ParkingNearRailroad, //143.8
+        ParkingOnLeftSide, //143.11
+        ParkingOnWalkway, //143.14
+        ParkingOnGrass, //143.15
+        ParkingNearShop; //143.18
 
-/*
+        public static Violation getViolationFromEnum(ViolationEnum violationEnum) {
+            switch(violationEnum) {
+                case ParkingAtBusStop : return new ParkingAtBusStop();
+                case ParkingNearRailroad: return new ParkingNearRailroad();
+                case ParkingNearShop: return new ParkingNearShop();
+                case ParkingOnBridge: return new ParkingOnBridge();
+                case ParkingOnCrossing: return new ParkingOnCrossing();
+                case ParkingOnGrass: return  new ParkingOnGrass();
+                case ParkingOnLeftSide: return new ParkingOnLeftSide();
+                case ParkingOnWalkway: return new ParkingOnWalkway();
+                case ParkingUnderSign: return new ParkingUnderSign();
+            }
+            return null;
+        }
+    }
+
+    /*
 143. Остановка и стоянка транспортных средств запрещаются:
 143.1. в зоне действия соответственно дорожных знаков «Остановка запрещена», «Стоянка запрещена», «Стоянка запрещена по нечетным числам месяца», «Стоянка запрещена по четным числам месяца» и (или) линий горизонтальной дорожной разметки 1.4, 1.10;
 143.2. в местах, где расстояние между сплошной линией горизонтальной дорожной разметки (кроме обозначающей край проезжей части дороги) и остановившимся транспортным средством составляет менее 3 метров;
@@ -38,80 +64,3 @@ import com.github.maximkirko.wpserver.datamodel.actions.IAction;
 147. При нарушении водителями правил остановки или стоянки транспортных средств, в результате которого создано препятствие для дорожного движения или возникла угроза безопасности граждан, сотрудники ГАИ вправе произвести принудительную отбуксировку (эвакуацию) таких транспортных средств в порядке, установленном законодательными актами и принятыми в целях их реализации постановлениями Совета Министров Республики Беларусь.
 При нарушении водителями правил остановки или стоянки грузовых автомобилей, автобусов, колесных тракторов, самоходных машин сотрудниками ГАИ может быть произведена блокировка колес этих транспортных средств в порядке, установленном законодательными актами и принятыми в целях их реализации постановлениями Совета Министров Республики Беларусь.
  */
-
-/**
- * Created by Pavel on 12.10.2016.
- */
-public abstract class Violation {
-
-    public enum ViolationType {
-        ParkingUnderSign, //143.1
-        ParkingOnCrossing, //143.4
-        ParkingAtBusStop, //143.5
-        ParkingOnBridge, //143.6
-        ParkingNearRailroad, //143.8
-        ParkingOnLeftSide, //143.11
-        ParkingOnWalkway, //143.14
-        ParkingOnGrass, //143.15
-        ParkingNearShop; //143.18
-
-        public static Violation getViolationFromEnum(ViolationType violationType) {
-            switch(violationType) {
-                case ParkingAtBusStop : return new ParkingAtBusStop();
-                case ParkingNearRailroad: return new ParkingNearRailroad();
-                case ParkingNearShop: return new ParkingNearShop();
-                case ParkingOnBridge: return new ParkingOnBridge();
-                case ParkingOnCrossing: return new ParkingOnCrossing();
-                case ParkingOnGrass: return  new ParkingOnGrass();
-                case ParkingOnLeftSide: return new ParkingOnLeftSide();
-                case ParkingOnWalkway: return new ParkingOnWalkway();
-                case ParkingUnderSign: return new ParkingUnderSign();
-            }
-            return null;
-        }
-    }
-
-    private Long id;
-    private ViolationType type;
-    private String description;
-    private double fee;
-    private IAction action;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setType(ViolationType type) {
-        this.type = type;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getFee() {
-        return fee;
-    }
-
-    public void setFee(double fee) {
-        this.fee = fee;
-    }
-
-    public IAction getAction() {
-        return action;
-    }
-
-    public void setAction(IAction action) {
-        this.action = action;
-    }
-
-    public abstract Enum getType();
-}

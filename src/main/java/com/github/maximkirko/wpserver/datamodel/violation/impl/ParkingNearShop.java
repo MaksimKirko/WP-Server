@@ -1,4 +1,7 @@
-package com.github.maximkirko.wpserver.datamodel.violations;
+package com.github.maximkirko.wpserver.datamodel.violation.impl;
+
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 
 /**
  * Created by Pavel on 03.10.2016.
@@ -9,7 +12,4 @@ public class ParkingNearShop extends Violation {
                     "производятся погрузочно-разгрузочные работы, закрытых ворот, в том числе ворот гаражей.");
         }
 
-    public Enum getType() {
-        return ViolationType.ParkingNearShop;
-    }
 }

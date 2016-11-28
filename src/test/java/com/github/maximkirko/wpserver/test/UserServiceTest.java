@@ -1,7 +1,7 @@
 package com.github.maximkirko.wpserver.test;
 
 import com.github.maximkirko.wpserver.datamodel.User;
-import com.github.maximkirko.wpserver.service.IUserService;
+import com.github.maximkirko.wpserver.service.api.IUserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;

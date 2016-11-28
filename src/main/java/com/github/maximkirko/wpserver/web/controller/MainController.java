@@ -1,7 +1,6 @@
 package com.github.maximkirko.wpserver.web.controller;
 
-import com.github.maximkirko.wpserver.datamodel.Ticket;
-import com.github.maximkirko.wpserver.service.IUserService;
+import com.github.maximkirko.wpserver.service.api.IUserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
