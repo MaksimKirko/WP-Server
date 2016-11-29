@@ -67,7 +67,6 @@ public class Action {
                 "id=" + id +
                 ", type=" + type +
                 ", description='" + description + '\'' +
-                ", violations=" + violations +
                 '}';
     }
 

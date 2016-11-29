@@ -1,53 +1,28 @@
 package com.github.maximkirko.wpserver.datamodel;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * Created by Pavel on 25.09.2016.
  */
 @Entity
 @Table(name = "ticket")
-public class Ticket implements java.io.Serializable {
-
+public class Ticket {
 
     private Long id;
-    //private List<Photo> violationPhotos;
-
-//    @Column(name = "violation_id", unique = true, nullable = false, length = 15)
-//    private Violation violation;
-
-
+    private Set<Photo> violationPhotos;
+    private Violation violation;
     private String licensePlate;
-
-
     private String address;
-
-
     private String location;
-
-
     private Date date;
-
-
     private String comment;
-
-
     private Set<User> users;
 
     @Id
@@ -61,21 +36,28 @@ public class Ticket implements java.io.Serializable {
         this.id = id;
     }
 
-//    public List<Photo> getViolationPhotos() {
-//        return violationPhotos;
-//    }
-//
-//    public void setViolationPhotos(List<Photo> violationPhotos) {
-//        this.violationPhotos = violationPhotos;
-//    }
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "ticket_2_photo", joinColumns = {
+            @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "photo_id",
+                    nullable = false, updatable = false)})
+    public Set<Photo> getViolationPhotos() {
+        return violationPhotos;
+    }
 
-//    public Violation getViolations() {
-//        return violation;
-//    }
-//
-//    public void setViolations(Violation violation) {
-//        this.violation = violation;
-//    }
+    public void setViolationPhotos(Set<Photo> violationPhotos) {
+        this.violationPhotos = violationPhotos;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "violation_id", nullable = false)
+    public Violation getViolation() {
+        return violation;
+    }
+
+    public void setViolation(Violation violation) {
+        this.violation = violation;
+    }
 
     @Column(name = "license_plate", length = 15)
     public String getLicensePlate() {
@@ -129,6 +111,19 @@ public class Ticket implements java.io.Serializable {
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", violation=" + violation +
+                ", licensePlate='" + licensePlate + '\'' +
+                ", address='" + address + '\'' +
+                ", location='" + location + '\'' +
+                ", date=" + date +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 
     public Ticket() {

@@ -1,8 +1,11 @@
 package com.github.maximkirko.wpserver.datamodel.violation;
 
+import com.github.maximkirko.wpserver.datamodel.Ticket;
 import com.github.maximkirko.wpserver.datamodel.action.Action;
 
 import javax.persistence.*;
+
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -20,6 +23,7 @@ public class Violation {
     private String description;
     private double fee;
     private Action action;
+    private Set<Ticket> tickets;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -67,6 +71,15 @@ public class Violation {
 
     public void setAction(Action action) {
         this.action = action;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "violation")
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override
