@@ -46,56 +46,41 @@
 
 <h1>Пожалуйста, авторизуйтесь для продолжения работы с приложением:</h1>
 
-<h3>Enter your username and password</h3>
-<form method="post" action="j_spring_security_check">
-    UserName :<input name="j_username" type="text" /> <br />
-    Password :<input name="j_password" type="password" /> <br />
-    <input value="Login" type="submit" />
-</form>
+<div id="login-box">
 
-<br />
-<c:if test="${param.status=='error'}">
-    <label style="color:red">Invalid username or password!!</label>
-</c:if>
-<c:if test="${param.status=='logout'}">
-    <label style="color:green">Logged out successfully!</label>
-</c:if>
+    <h2>Введите имя пользователя и пароль от аккаунта:</h2>
 
-<%--<div id="login-box">--%>
+    <c:if test="${not empty error}">
+        <div class="error">${error}</div>
+    </c:if>
+    <c:if test="${not empty msg}">
+        <div class="msg">${msg}</div>
+    </c:if>
 
-    <%--<h2>Введите имя пользователя и пароль от аккаунта:</h2>--%>
+    <form name='loginForm'
+          action="<c:url value='j_spring_security_check' />" method='POST'>
 
-    <%--<c:if test="${not empty error}">--%>
-        <%--<div class="error">${error}</div>--%>
-    <%--</c:if>--%>
-    <%--<c:if test="${not empty msg}">--%>
-        <%--<div class="msg">${msg}</div>--%>
-    <%--</c:if>--%>
+        <table>
+            <tr>
+                <td>Имя:</td>
+                <td><input type='text' name='username' value=''></td>
+            </tr>
+            <tr>
+                <td>Пароль:</td>
+                <td><input type='password' name='password' /></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan='2'><input name="submit" type="submit"
+                                       value="Отправить" /></td>
+            </tr>
+        </table>
 
-    <%--<form name='loginForm'--%>
-          <%--action="<c:url value='j_spring_security_check' />" method='POST'>--%>
+        <input type="hidden" name="${_csrf.parameterName}"
+               value="${_csrf.token}" />
 
-        <%--<table>--%>
-            <%--<tr>--%>
-                <%--<td>Имя:</td>--%>
-                <%--<td><input type='text' name='username' value=''></td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td>Пароль:</td>--%>
-                <%--<td><input type='password' name='password' /></td>--%>
-            <%--</tr>--%>
-            <%--<tr>--%>
-                <%--<td></td>--%>
-                <%--<td colspan='2'><input name="submit" type="submit"--%>
-                                       <%--value="Отправить" /></td>--%>
-            <%--</tr>--%>
-        <%--</table>--%>
-
-        <%--<input type="hidden" name="${_csrf.parameterName}"--%>
-               <%--value="${_csrf.token}" />--%>
-
-    <%--</form>--%>
-<%--</div>--%>
+    </form>
+</div>
 
 </body>
 </html>
