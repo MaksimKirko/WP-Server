@@ -33,7 +33,7 @@ public class Action {
         this.id = id;
     }
 
-    @Column(name = "type", unique = true, nullable = false, length = 256)
+    @Column(name = "type", unique = true, nullable = false, length = 128)
     @Enumerated(EnumType.STRING)
     public ActionEnum getType() {
         return type;
@@ -52,7 +52,7 @@ public class Action {
         this.description = description;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "action")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "actions")
     public List<Violation> getViolations() {
         return violations;
     }

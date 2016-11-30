@@ -1,21 +1,9 @@
 package com.github.maximkirko.wpserver.datamodel;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
-import java.util.List;
+import javax.persistence.*;
 import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
-import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * Created by MadMax on 20.11.2016.
@@ -28,6 +16,8 @@ public class User implements java.io.Serializable {
     private Long id;
     private String login;
     private String password;
+    private Role role;
+    private boolean isLoggedIn;
     private Set<Ticket> tickets;
 
     @Id
@@ -57,6 +47,25 @@ public class User implements java.io.Serializable {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @JoinColumn(name = "role_id", nullable = false)
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Column(name = "is_logged_in", nullable = false)
+    public boolean isLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setLoggedIn(boolean loggedIn) {
+        isLoggedIn = loggedIn;
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

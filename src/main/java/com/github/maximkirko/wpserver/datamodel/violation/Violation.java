@@ -22,7 +22,7 @@ public class Violation {
     private ViolationEnum type;
     private String description;
     private double fee;
-    private Action action;
+    private Set<Action> actions;
     private Set<Ticket> tickets;
 
     @Id
@@ -36,7 +36,7 @@ public class Violation {
         this.id = id;
     }
 
-    @Column(name = "type", unique = true, nullable = false, length = 256)
+    @Column(name = "type", unique = true, nullable = false, length = 128)
     public ViolationEnum getType() {
         return this.type;
     }
@@ -63,14 +63,17 @@ public class Violation {
         this.fee = fee;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "action_id", nullable = false)
-    public Action getAction() {
-        return action;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "violation_2_action", joinColumns = {
+            @JoinColumn(name = "violation_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "action_id",
+                    nullable = false, updatable = false)})
+    public Set<Action> getActions() {
+        return actions;
     }
 
-    public void setAction(Action action) {
-        this.action = action;
+    public void setActions(Set<Action> actions) {
+        this.actions = actions;
     }
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "violation")
@@ -89,7 +92,6 @@ public class Violation {
                 ", type=" + type +
                 ", description='" + description + '\'' +
                 ", fee=" + fee +
-                ", action=" + action +
                 '}';
     }
 

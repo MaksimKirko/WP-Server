@@ -59,7 +59,7 @@ public class Ticket {
         this.violation = violation;
     }
 
-    @Column(name = "license_plate", length = 15)
+    @Column(name = "license_plate", length = 128)
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -68,7 +68,7 @@ public class Ticket {
         this.licensePlate = licensePlate;
     }
 
-    @Column(name = "address", length = 100)
+    @Column(name = "address", length = 256)
     public String getAddress() {
         return address;
     }
@@ -77,7 +77,7 @@ public class Ticket {
         this.address = address;
     }
 
-    @Column(name = "coords", length = 100)
+    @Column(name = "location", length = 128)
     public String getLocation() {
         return location;
     }
@@ -86,7 +86,7 @@ public class Ticket {
         this.location = location;
     }
 
-    @Column(name = "date", length = 15)
+    @Column(name = "date")
     public Date getDate() {
         return date;
     }
@@ -95,7 +95,7 @@ public class Ticket {
         this.date = date;
     }
 
-    @Column(name = "comment", length = 100)
+    @Column(name = "comment", length = 512)
     public String getComment() {
         return comment;
     }
