@@ -21,4 +21,13 @@ public enum ActionEnum {
         }
         return null;
     }
+
+    public static String getRusAction(ActionEnum actionEnum) {
+        switch(actionEnum) {
+            case CallATowTrack : return "Вызвать эвакуатор";
+            case WheelsBlock: return "Заблокировать колеса";
+            case AssignFee: return "Выписать штраф";
+        }
+        return null;
+    }
 }

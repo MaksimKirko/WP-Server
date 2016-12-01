@@ -42,12 +42,15 @@
         #controls {
             margin-left: 780px;
         }
-        .violationPick {
-            width: 320px;
+        .filter-option {
             color: white;
         }
+        .violationPick {
+            width: 350px;
+            /*color: white;*/
+        }
         select[title]{
-            color: white;
+            /*color: white;*/
         }
         body{
             padding:50px;
@@ -89,29 +92,16 @@
             <%--Creation of the "tickets" collection--%>
             <jsp:useBean id="ticket" class="com.github.maximkirko.wpserver.datamodel.Ticket" scope="page"/>
             <%
-                List<Ticket> inputTickets = new ArrayList<Ticket>();
+
                 List<Ticket> handledTickets = new ArrayList<Ticket>();
                 List<Ticket> archivedTickets = new ArrayList<Ticket>();
 
-                ticket.setId((long)1);
-                ticket.setLicensePlate("1234 AB-1");
-                ticket.setComment("абвгд");
-                inputTickets.add(ticket);
-                ticket = new Ticket();
-
-                ticket.setId((long)2);
-                ticket.setLicensePlate("9876 AB-2");
-                ticket.setComment("jhgf");
-                inputTickets.add(ticket);
 
 
-                request.setAttribute("inputTickets", inputTickets);
+                //request.setAttribute("inputTickets", inputTickets);
             %>
 
-            <%
-                User user = new User();
-                user.setLogin("");
-            %>
+
 
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
@@ -156,7 +146,7 @@
                         </tr>
                         <tr>
                             <td colspan="12" class="hiddenRow">
-                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
+                                <div class="accordion-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
                                     <table class="table table-bordered">
                                         <thead>
                                         <tr>
@@ -176,21 +166,22 @@
                                             <td class="">
                                                 <div class="btn-group">
                                                     <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
-                                                        <option value="">Парковка на остановке</option>
-                                                        <option value="">Парковка на/у железной дороги</option>
-                                                        <option value="">Парковка у магазина</option>
-                                                        <option value="">Парковка на мосту/эстакаде</option>
-                                                        <option value="">Парковка на перекрестке</option>
-                                                        <option value="">Парковка на газоне</option>
-                                                        <option value="">парковка у левой обочины</option>
-                                                        <option value="">Парковка на тротуаре</option>
-                                                        <option value="">Парковка под знаком</option>
+                                                        <%--<c:forEach var="violation" items="${}"/>--%>
+                                                        <%--<option value="">Парковка на остановке</option>--%>
+                                                        <%--<option value="">Парковка на/у железной дороги</option>--%>
+                                                        <%--<option value="">Парковка у магазина</option>--%>
+                                                        <%--<option value="">Парковка на мосту/эстакаде</option>--%>
+                                                        <%--<option value="">Парковка на перекрестке</option>--%>
+                                                        <%--<option value="">Парковка на газоне</option>--%>
+                                                        <%--<option value="">парковка у левой обочины</option>--%>
+                                                        <%--<option value="">Парковка на тротуаре</option>--%>
+                                                        <%--<option value="">Парковка под знаком</option>--%>
                                                     </select>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <select class="selectpicker actionPick" title="Выберите действие" data-style="btn-info">
+                                                    <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                                         <option value="">Вызвать эвакуатор</option>
                                                         <option value="">Заблокировать колёса</option>
                                                         <option value="">Выписать штраф</option>
