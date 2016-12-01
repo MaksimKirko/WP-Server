@@ -57,6 +57,7 @@
         }
         .btn-group {
             white-space: nowrap;
+            width: 250px;
         }
         .btn-group .btn {
             float: none;
@@ -88,21 +89,6 @@
                     document.getElementById("logoutForm").submit();
                 }
             </script>
-
-            <%--Creation of the "tickets" collection--%>
-            <jsp:useBean id="ticket" class="com.github.maximkirko.wpserver.datamodel.Ticket" scope="page"/>
-            <%
-
-                List<Ticket> handledTickets = new ArrayList<Ticket>();
-                List<Ticket> archivedTickets = new ArrayList<Ticket>();
-
-
-
-                //request.setAttribute("inputTickets", inputTickets);
-            %>
-
-
-
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <div id="user">
@@ -166,25 +152,18 @@
                                             <td class="">
                                                 <div class="btn-group">
                                                     <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
-                                                        <%--<c:forEach var="violation" items="${}"/>--%>
-                                                        <%--<option value="">Парковка на остановке</option>--%>
-                                                        <%--<option value="">Парковка на/у железной дороги</option>--%>
-                                                        <%--<option value="">Парковка у магазина</option>--%>
-                                                        <%--<option value="">Парковка на мосту/эстакаде</option>--%>
-                                                        <%--<option value="">Парковка на перекрестке</option>--%>
-                                                        <%--<option value="">Парковка на газоне</option>--%>
-                                                        <%--<option value="">парковка у левой обочины</option>--%>
-                                                        <%--<option value="">Парковка на тротуаре</option>--%>
-                                                        <%--<option value="">Парковка под знаком</option>--%>
+                                                        <c:forEach var="violation" items="${rusViolations}">
+                                                            <option value=""><c:out value="${violation}"></c:out></option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </td>
                                             <td>
                                                 <div class="btn-group">
                                                     <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
-                                                        <option value="">Вызвать эвакуатор</option>
-                                                        <option value="">Заблокировать колёса</option>
-                                                        <option value="">Выписать штраф</option>
+                                                        <c:forEach var="action" items="${rusActions}">
+                                                            <option value=""><c:out value="${action}"></c:out></option>
+                                                        </c:forEach>
                                                     </select>
                                                 </div>
                                             </td>

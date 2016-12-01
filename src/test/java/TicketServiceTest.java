@@ -31,22 +31,62 @@ public class TicketServiceTest {
     @Inject
     private IViolationService violationService;
 
-    @Test
-    public void deleteTest() {
+    @Inject
+    private IActionService actionService;
 
-        //ticketService.delete(3l);
+    @Test
+    public void defaultTest() {
 
     }
 
-    @Test
-    public void insertTest() {
+//    @Test
+//    public void deleteTest() {
+//
+//        ticketService.delete(3l);
+//
+//    }
 
-        Ticket ticket = new Ticket();
-        ticket.setType(TicketEnum.NOT_PROCESSED);
-        ticket.setDate(new Date());
-        ticket.setLocation("loc");
-        ticket.setLicensePlate("LP 1234");
+//    @Test
+//    public void actionInsertTest() {
+//
+//        Action action = new Action();
+//        action.setType(ActionEnum.AssignFee);
+//        action.setDescription("desc");
+//
+//        actionService.save(action);
+//    }
 
+//    @Test
+//    public void violationInsertTest() {
+//
+//        Action action = new Action();
+//        action.setType(ActionEnum.CallATowTrack);
+//        action.setDescription("desc");
+//
+//        actionService.save(action);
+//
+//        Violation violation = new Violation();
+//        violation.setType(ViolationEnum.ParkingAtBusStop);
+//        violation.setFee(50f);
+//        violation.setDescription("desc");
+//        Set<Action> actions = new HashSet<>();
+//        actions.add(action);
+//
+//        violation.setActions(actions);
+//
+//        violationService.save(violation);
+//
+//    }
+
+//    @Test
+//    public void ticketInsertTest() {
+//
+//        Ticket ticket = new Ticket();
+//        ticket.setType(TicketEnum.NOT_PROCESSED);
+//        ticket.setDate(new Date());
+//        ticket.setLocation("loc");
+//        ticket.setLicensePlate("LP 1234");
+//
 //        Action action = new Action();
 //        action.setType(ActionEnum.CallATowTrack);
 //        action.setDescription("desc");
@@ -55,34 +95,37 @@ public class TicketServiceTest {
 //        violation.setType(ViolationEnum.ParkingAtBusStop);
 //        violation.setFee(50f);
 //        violation.setDescription("desc");
-//        Set<Action> actions = new HashSet<>(); //asdcfvgbnmasdfgvbjmswedrfgyhujmkwzexcrgtbjnmk!!!!!!!!!!!!!!!!!!
+//        Set<Action> actions = new HashSet<>();
 //        actions.add(action);
 //
 //        violation.setActions(actions);
-
-        ticket.setViolation(violationService.getById(3l));
-
-        Photo photo = new Photo();
-        photo.setPhoto(new byte[5]);
-
-        Set<Photo> photoSet = new HashSet<>();
-        photoSet.add(photo);
-
-        ticket.setViolationPhotos(photoSet);
-
-        ticketService.save(ticket);
-
-//        User user = new User();
-//        user.setLogin("maximkirko");
-//        user.setPassword("qwerty");
-//        user.setLoggedIn(false);
 //
-//        Role role = new Role();
-//        role.setType("ADMIN");
+//        ticket.setViolation(violationService.getById(2l));
 //
-//        user.setRole(role);
+//        Photo photo = new Photo();
+//        photo.setPhoto(new byte[5]);
 //
-//        userService.save(user);
-
-    }
+//        Set<Photo> photoSet = new HashSet<>();
+//        photoSet.add(photo);
+//
+//        ticket.setViolationPhotos(photoSet);
+//
+//        ticketService.save(ticket);
+//
+//
+//
+//
+////        User user = new User();
+////        user.setLogin("maximkirko");
+////        user.setPassword("qwerty");
+////        user.setLoggedIn(false);
+////
+////        Role role = new Role();
+////        role.setType("ADMIN");
+////
+////        user.setRole(role);
+////
+////        userService.save(user);
+//
+//    }
 }

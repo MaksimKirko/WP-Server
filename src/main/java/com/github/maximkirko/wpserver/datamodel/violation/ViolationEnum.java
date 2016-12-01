@@ -2,6 +2,9 @@ package com.github.maximkirko.wpserver.datamodel.violation;
 
 import com.github.maximkirko.wpserver.datamodel.violation.impl.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public enum ViolationEnum {
         ParkingUnderSign, //143.1
         ParkingOnCrossing, //143.4
@@ -27,6 +30,39 @@ public enum ViolationEnum {
             }
             return null;
         }
+
+
+    public static String getRusViolation(ViolationEnum violationEnum) {
+
+        switch(violationEnum) {
+            case ParkingAtBusStop : return "Парковка на остановке маршрутных т/с";
+            case ParkingNearRailroad: return "Парковка у/на железнодорожных путях";
+            case ParkingNearShop: return "Парковка у дверей магазина";
+            case ParkingOnBridge: return "Парковка на мосту/эстакаде";
+            case ParkingOnCrossing: return "Парковка на перекрестке";
+            case ParkingOnGrass: return "Парковка на газоне";
+            case ParkingOnLeftSide: return "Парковка на левой части проезжей части";
+            case ParkingOnWalkway: return "Парковка на пешеходной дорожке";
+            case ParkingUnderSign: return "Парковка в зоне действия запрещающего знака";
+        }
+        return "";
+    }
+
+    public static List<String> getRusViolationsList() {
+        List<String> violations = new ArrayList<>();
+
+        violations.add("Парковка на остановке маршрутных т/с");
+        violations.add("Парковка у/на железнодорожных путях");
+        violations.add("Парковка у дверей магазина");
+        violations.add("Парковка на мосту/эстакаде");
+        violations.add("Парковка на перекрестке");
+        violations.add("Парковка на газоне");
+        violations.add("Парковка на левой части проезжей части");
+        violations.add("Парковка на пешеходной дорожке");
+        violations.add("Парковка в зоне действия запрещающего знака");
+
+        return violations;
+    }
     }
 
     /*

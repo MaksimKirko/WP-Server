@@ -1,6 +1,8 @@
 package com.github.maximkirko.wpserver.web.controller;
 
 import com.github.maximkirko.wpserver.datamodel.Ticket;
+import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
@@ -72,13 +74,14 @@ public class MainController {
 
         List<Ticket> inputTickets = ticketService.getAll();
 
-        for(Ticket ticket : inputTickets) {
-            System.out.println(ticket.toString());
-        }
+        List<String> rusViolations = ViolationEnum.getRusViolationsList();
+
+        List<String> rusActions = ActionEnum.getRusActionList();
 
         ModelAndView model = new ModelAndView();
 
-
+        model.addObject("rusActions", rusActions);
+        model.addObject("rusViolations", rusViolations);
         model.addObject("inputTickets",inputTickets);
         model.setViewName("app");
 
