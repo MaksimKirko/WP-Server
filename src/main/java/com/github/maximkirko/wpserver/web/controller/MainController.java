@@ -1,6 +1,9 @@
 package com.github.maximkirko.wpserver.web.controller;
 
+import com.github.maximkirko.wpserver.datamodel.Ticket;
+import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
+import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.inject.Inject;
+import java.util.List;
 
 /**
  * Created by Pavel on 13.11.2016.
@@ -16,7 +20,7 @@ import javax.inject.Inject;
 public class MainController {
 
     @Inject
-    private IUserService userService;
+    private ITicketService ticketService;
 
     @RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
     public ModelAndView welcomePage() {
@@ -62,11 +66,20 @@ public class MainController {
 
     }
 
+
     @RequestMapping(value = "/app**", method = RequestMethod.GET)
     public ModelAndView appPage() {
 
+        List<Ticket> inputTickets = ticketService.getAll();
+
+        for(Ticket ticket : inputTickets) {
+            System.out.println(ticket.toString());
+        }
 
         ModelAndView model = new ModelAndView();
+
+
+        model.addObject("inputTickets",inputTickets);
         model.setViewName("app");
 
         return model;
