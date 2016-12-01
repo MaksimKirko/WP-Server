@@ -1,5 +1,6 @@
 <%@ page import="com.github.maximkirko.wpserver.datamodel.Ticket" %>
 <%@ page import="java.util.*" %>
+<%@ page import="com.github.maximkirko.wpserver.datamodel.User" %>
 <%--
   Created by IntelliJ IDEA.
   User: Pavel
@@ -107,6 +108,11 @@
                 request.setAttribute("inputTickets", inputTickets);
             %>
 
+            <%
+                User user = new User();
+                user.setLogin("");
+            %>
+
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
                 <div id="user">
@@ -169,7 +175,7 @@
                                             <td class="">...</td>
                                             <td class="">
                                                 <div class="btn-group">
-                                                    <select class="selectpicker violationPick" title="Выберите одно или несколько нарушений" multiple data-style="btn-info">
+                                                    <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
                                                         <option value="">Парковка на остановке</option>
                                                         <option value="">Парковка на/у железной дороги</option>
                                                         <option value="">Парковка у магазина</option>
@@ -184,23 +190,11 @@
                                             </td>
                                             <td>
                                                 <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger">Action</button>
-                                                    <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a>
-                                                        </li>
-                                                        <li><a href="#">Another action</a>
-                                                        </li>
-                                                        <li><a href="#">Something else here</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a>
-                                                        </li>
-                                                    </ul>
+                                                    <select class="selectpicker actionPick" title="Выберите действие" data-style="btn-info">
+                                                        <option value="">Вызвать эвакуатор</option>
+                                                        <option value="">Заблокировать колёса</option>
+                                                        <option value="">Выписать штраф</option>
+                                                    </select>
                                                 </div>
                                             </td>
                                             <td class=""></td>

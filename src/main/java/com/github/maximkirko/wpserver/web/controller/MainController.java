@@ -65,11 +65,13 @@ public class MainController {
     @RequestMapping(value = "/app**", method = RequestMethod.GET)
     public ModelAndView appPage() {
 
+
         ModelAndView model = new ModelAndView();
         model.setViewName("app");
 
         return model;
 
     }
+
 
 }
