@@ -52,7 +52,7 @@ public class Action {
         this.description = description;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "actions")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "actions", cascade = CascadeType.ALL)
     public List<Violation> getViolations() {
         return violations;
     }

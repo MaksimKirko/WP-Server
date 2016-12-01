@@ -63,7 +63,7 @@ public class Violation {
         this.fee = fee;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "violation_2_action", joinColumns = {
             @JoinColumn(name = "violation_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "action_id",

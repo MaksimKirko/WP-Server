@@ -1,6 +1,8 @@
 package com.github.maximkirko.wpserver.datamodel;
 
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,6 +18,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Ticket {
 
     private Long id;
+    private TicketEnum type;
     private Set<Photo> violationPhotos;
     private Violation violation;
     private String licensePlate;
@@ -36,6 +39,15 @@ public class Ticket {
         this.id = id;
     }
 
+    @Column(name = "type", unique = false, nullable = false, length = 128)
+    public TicketEnum getType() {
+        return type;
+    }
+
+    public void setType(TicketEnum type) {
+        this.type = type;
+    }
+
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "ticket_2_photo", joinColumns = {
             @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
@@ -49,8 +61,8 @@ public class Ticket {
         this.violationPhotos = violationPhotos;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "violation_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "violation_id", nullable = false, updatable = false)
     public Violation getViolation() {
         return violation;
     }

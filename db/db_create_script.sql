@@ -1,5 +1,6 @@
 CREATE TABLE "ticket" (
 	"id" serial NOT NULL,
+	"type" character varying(128) NOT NULL,
 	"violation_id" bigint,
 	"license_plate" character varying(128),
 	"address" character varying(256),

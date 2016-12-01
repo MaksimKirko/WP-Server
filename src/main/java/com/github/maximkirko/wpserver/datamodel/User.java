@@ -68,7 +68,7 @@ public class User implements java.io.Serializable {
         isLoggedIn = loggedIn;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "user_2_ticket", joinColumns = {
             @JoinColumn(name = "user_id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "ticket_id",
