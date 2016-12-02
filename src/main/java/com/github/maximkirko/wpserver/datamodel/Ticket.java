@@ -26,7 +26,6 @@ public class Ticket {
     private String location;
     private Date date;
     private String comment;
-    private Set<User> users;
 
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -114,15 +113,6 @@ public class Ticket {
 
     public void setComment(String comment) {
         this.comment = comment;
-    }
-
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "tickets")
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     @Override

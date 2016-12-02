@@ -1,5 +1,6 @@
 package com.github.maximkirko.wpserver.dao.impl;
 
+
 import com.github.maximkirko.wpserver.dao.api.IUserDao;
 import com.github.maximkirko.wpserver.dao.util.HibernateUtil;
 import com.github.maximkirko.wpserver.datamodel.User;

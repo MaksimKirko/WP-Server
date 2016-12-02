@@ -18,7 +18,6 @@
         <mapping class="com.github.maximkirko.wpserver.datamodel.Ticket" />
         <mapping class="com.github.maximkirko.wpserver.datamodel.violation.Violation" />
         <mapping class="com.github.maximkirko.wpserver.datamodel.action.Action" />
-        <mapping class="com.github.maximkirko.wpserver.datamodel.Ticket" />
         <mapping class="com.github.maximkirko.wpserver.datamodel.Photo" />
 
     </session-factory>

@@ -34,6 +34,9 @@ public class TicketServiceTest {
     @Inject
     private IActionService actionService;
 
+    @Inject
+    private IUserService userService;
+
     @Test
     public void defaultTest() {
 
@@ -45,7 +48,7 @@ public class TicketServiceTest {
 //        ticketService.delete(3l);
 //
 //    }
-
+//
 //    @Test
 //    public void actionInsertTest() {
 //
@@ -55,7 +58,7 @@ public class TicketServiceTest {
 //
 //        actionService.save(action);
 //    }
-
+//
 //    @Test
 //    public void violationInsertTest() {
 //
@@ -77,7 +80,7 @@ public class TicketServiceTest {
 //        violationService.save(violation);
 //
 //    }
-
+//
 //    @Test
 //    public void ticketInsertTest() {
 //
@@ -112,20 +115,24 @@ public class TicketServiceTest {
 //
 //        ticketService.save(ticket);
 //
+//    }
+
 //
+//    @Test
+//    public void insertUserTest() {
 //
+//        User user = new User();
+//        user.setLogin("bad");
+//        user.setPassword("qwerty");
+//        user.setFirstName("Maxim");
+//        user.setLastName("Kirko");
+//        user.setEmail("email");
 //
-////        User user = new User();
-////        user.setLogin("maximkirko");
-////        user.setPassword("qwerty");
-////        user.setLoggedIn(false);
-////
-////        Role role = new Role();
-////        role.setType("ADMIN");
-////
-////        user.setRole(role);
-////
-////        userService.save(user);
+//        Role role = new Role();
+//        role.setType(RoleEnum.ADMIN);
 //
+//        user.setRole(role);
+//
+//        userService.save(user);
 //    }
 }

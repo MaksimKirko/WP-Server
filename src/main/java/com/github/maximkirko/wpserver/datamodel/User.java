@@ -1,97 +1,120 @@
 package com.github.maximkirko.wpserver.datamodel;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
-import java.util.Set;
 
-import static javax.persistence.GenerationType.IDENTITY;
-
-/**
- * Created by MadMax on 20.11.2016.
- */
 @Entity
-@Table(name = "\"user\"", uniqueConstraints = {
-        @UniqueConstraint(columnNames = "login")})
-public class User implements java.io.Serializable {
+@Table(name="\"user\"")
+public class User {
 
-    private Long id;
-    private String login;
-    private String password;
-    private Role role;
-    private boolean isLoggedIn;
-    private Set<Ticket> tickets;
+	@Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Long id;
 
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    @Column(name = "id", unique = true, nullable = false)
-    public Long getId() {
-        return id;
-    }
+	@NotEmpty
+	@Column(name="login", unique=true, nullable=false)
+	private String login;
+	
+	@NotEmpty
+	@Column(name="password", nullable=false)
+	private String password;
+		
+	@NotEmpty
+	@Column(name="first_name", nullable=false)
+	private String firstName;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	@NotEmpty
+	@Column(name="last_name", nullable=false)
+	private String lastName;
 
-    @Column(name = "login", unique = true, nullable = false, length = 128)
-    public String getLogin() {
-        return login;
-    }
+	@NotEmpty
+	@Column(name="email", nullable=false)
+	private String email;
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
+	@NotEmpty
+	@Column(name="state", nullable=false)
+	private String state=State.ACTIVE.getState();
 
-    @Column(name = "password", nullable = false, length = 128)
-    public String getPassword() {
-        return password;
-    }
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "role_id", nullable = false)
+	private Role role;
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @JoinColumn(name = "role_id", nullable = false)
-    public Role getRole() {
-        return role;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+	public String getLogin() {
+		return login;
+	}
 
-    @Column(name = "is_logged_in", nullable = false)
-    public boolean isLoggedIn() {
-        return isLoggedIn;
-    }
+	public void setLogin(String login) {
+		this.login = login;
+	}
 
-    public void setLoggedIn(boolean loggedIn) {
-        isLoggedIn = loggedIn;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_2_ticket", joinColumns = {
-            @JoinColumn(name = "user_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "ticket_id",
-                    nullable = false, updatable = false)})
-    public Set<Ticket> getTickets() {
-        return tickets;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
-    }
+	public String getFirstName() {
+		return firstName;
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", login='" + login + '\'' +
-                ", password='" + password + '\'' +
-                ", tickets=" + tickets +
-                '}';
-    }
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
 
-    public User() {
+	public String getLastName() {
+		return lastName;
+	}
 
-    }
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getState() {
+		return state;
+	}
+
+	public void setState(String state) {
+		this.state = state;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", login='" + login + '\'' +
+				", password='" + password + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", email='" + email + '\'' +
+				", state='" + state + '\'' +
+				", role=" + role +
+				'}';
+	}
 }

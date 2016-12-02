@@ -59,20 +59,14 @@ OIDS=FALSE
 
 CREATE TABLE "user" (
 	"id" serial NOT NULL,
+	"first_name" character varying(128) NOT NULL,
+	"last_name" character varying(128) NOT NULL,
 	"login" character varying(128) NOT NULL UNIQUE,
 	"password" character varying(128) NOT NULL,
+	"email" character varying(256) NOT NULL,
 	"role_id" bigint NOT NULL,
-	"is_logged_in" BOOLEAN NOT NULL,
+	"state" character varying(128) NOT NULL,
 	CONSTRAINT user_pk PRIMARY KEY ("id")
-) WITH (
-OIDS=FALSE
-);
-
-
-
-CREATE TABLE "user_2_ticket" (
-	"user_id" bigint NOT NULL,
-	"ticket_id" bigint NOT NULL
 ) WITH (
 OIDS=FALSE
 );
@@ -107,9 +101,6 @@ ALTER TABLE "ticket_2_photo" ADD CONSTRAINT "ticket_2_photo_fk0" FOREIGN KEY ("t
 ALTER TABLE "ticket_2_photo" ADD CONSTRAINT "ticket_2_photo_fk1" FOREIGN KEY ("photo_id") REFERENCES "photo"("id");
 
 ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("role_id") REFERENCES "role"("id");
-
-ALTER TABLE "user_2_ticket" ADD CONSTRAINT "user_2_ticket_fk0" FOREIGN KEY ("user_id") REFERENCES "user"("id");
-ALTER TABLE "user_2_ticket" ADD CONSTRAINT "user_2_ticket_fk1" FOREIGN KEY ("ticket_id") REFERENCES "ticket"("id");
 
 ALTER TABLE "violation_2_action" ADD CONSTRAINT "violation_2_action_fk0" FOREIGN KEY ("violation_id") REFERENCES "violation"("id");
 ALTER TABLE "violation_2_action" ADD CONSTRAINT "violation_2_action_fk1" FOREIGN KEY ("action_id") REFERENCES "action"("id");

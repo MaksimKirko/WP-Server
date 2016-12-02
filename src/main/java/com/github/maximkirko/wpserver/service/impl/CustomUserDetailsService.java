@@ -1,60 +1,46 @@
 package com.github.maximkirko.wpserver.service.impl;
 
-import com.github.maximkirko.wpserver.dao.api.IUserDao;
-import com.github.maximkirko.wpserver.datamodel.Role;
+
+import com.github.maximkirko.wpserver.datamodel.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
-/**
- * Created by MadMax on 30.11.2016.
- */
+@Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
-    private IUserDao userDao;
+    @Inject
+    private com.github.maximkirko.wpserver.service.api.IUserService userService;
 
-    @Override
-    public UserDetails loadUserByUsername(final String username)
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String login)
             throws UsernameNotFoundException {
-
-        com.github.maximkirko.wpserver.datamodel.User user = userDao.getByLogin(username);
-        List<GrantedAuthority> authorities = buildUserAuthority(user.getRole());
-
-        return buildUserForAuthentication(user, authorities);
-
-
+        User user = userService.getByLogin(login);
+        System.out.println("User : " + user);
+        if (user == null) {
+            System.out.println("User not found");
+            throw new UsernameNotFoundException("Username not found");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),
+                user.getState().equals("Active"), true, true, true, getGrantedAuthorities(user));
     }
 
-    private User buildUserForAuthentication(com.github.maximkirko.wpserver.datamodel.User user, List<GrantedAuthority> authorities) {
-        return new User(user.getLogin(),
-                user.getPassword(), user.isLoggedIn(),
-                true, true, true, authorities);
+
+    private List<GrantedAuthority> getGrantedAuthorities(User user) {
+
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + user.getRole().getType()));
+        System.out.print("authorities :" + authorities);
+
+        return authorities;
     }
 
-    private List<GrantedAuthority> buildUserAuthority(Role role) {
-
-        Set<GrantedAuthority> setAuths = new HashSet<GrantedAuthority>();
-
-        setAuths.add(new SimpleGrantedAuthority(role.getType()));
-
-        List<GrantedAuthority> result = new ArrayList<GrantedAuthority>(setAuths);
-
-        return result;
-    }
-
-    public void setUserDao(IUserDao userDao) {
-        this.userDao = userDao;
-    }
-
-    public IUserDao getUserDao() {
-        return userDao;
-    }
 }
