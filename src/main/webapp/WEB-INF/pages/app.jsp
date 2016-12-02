@@ -40,7 +40,7 @@
             margin-left: 750px;
         }
         #controls {
-            margin-left: 780px;
+            align-content: left;
         }
         .filter-option {
             color: white;
@@ -59,12 +59,28 @@
             white-space: nowrap;
             width: 250px;
         }
+
+        .btn-flex {
+            display: flex;
+            align-items: stretch;
+            align-content: stretch;
+        }
+
+        .btn-flex .btn:first-child {
+            flex-grow: 1;
+            text-align: left;
+        }
+
         .btn-group .btn {
             float: none;
             display: inline-block;
         }
         .btn + .dropdown-toggle {
             margin-left: -4px;
+        }
+
+        .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+            width: 250px;
         }
 
         .table-responsive {
@@ -150,7 +166,7 @@
                                             <td class="">...</td>
                                             <td class="">...</td>
                                             <td class="">
-                                                <div class="btn-group">
+                                                <div class="btn-group btn-flex" style="width: 250px;">
                                                     <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
                                                         <c:forEach var="violation" items="${rusViolations}">
                                                             <option value=""><c:out value="${violation}"></c:out></option>
@@ -159,7 +175,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <div class="btn-group">
+                                                <div class="btn-group btn-flex">
                                                     <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                                         <c:forEach var="action" items="${rusActions}">
                                                             <option value=""><c:out value="${action}"></c:out></option>
@@ -172,26 +188,23 @@
                                         </tr>
                                         </tbody>
                                     </table>
-
-                                    <div class="btn-group" id="controls">
-                                        <button type="button" class="btn btn-danger">Action</button>
-                                        <button type="button" class="btn btn-danger dropdown-toggle"
-                                                data-toggle="dropdown">
-                                            <span class="caret"></span>
-                                            <span class="sr-only">Toggle Dropdown</span>
-                                        </button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="#">Action</a>
-                                            </li>
-                                            <li><a href="#">Another action</a>
-                                            </li>
-                                            <li><a href="#">Something else here</a>
-                                            </li>
-                                            <li class="divider"></li>
-                                            <li><a href="#">Separated link</a>
-                                            </li>
-                                        </ul>
+                                    <div id="controls">
+                                        <div class="btn-group btn-flex">
+                                            <button type="button" class="btn btn-info">Action</button>
+                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                <span class="caret"></span>
+                                                <span class="sr-only">Toggle Dropdown</span>
+                                            </button>
+                                            <ul class="dropdown-menu pull-right">
+                                                <li><a href="#">Action</a></li>
+                                                <li><a href="#">Another action</a></li>
+                                                <li><a href="#">Something else here</a></li>
+                                                <li role="separator" class="divider"></li>
+                                                <li><a href="#">Separated link</a></li>
+                                            </ul>
+                                        </div>
                                     </div>
+
                                 </div>
                             </td>
                         </tr>
