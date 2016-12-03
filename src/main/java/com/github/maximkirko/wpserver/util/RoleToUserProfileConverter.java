@@ -3,15 +3,15 @@ package com.github.maximkirko.wpserver.util;
 
 import com.github.maximkirko.wpserver.datamodel.Role;
 import com.github.maximkirko.wpserver.service.api.IRoleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
 
 @Component
 public class RoleToUserProfileConverter implements Converter<Object, Role> {
 
-    @Inject
+    @Autowired
     private IRoleService roleService;
 
     /*

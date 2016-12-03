@@ -10,7 +10,8 @@ public class Role {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="type", length=15, unique=true, nullable=false)
+	@Column(name="type", length=128, unique=true, nullable=false)
+	@Enumerated(EnumType.STRING)
 	private RoleEnum type;
 
     public Long getId() {

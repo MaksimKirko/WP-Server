@@ -23,7 +23,7 @@ public class RoleDaoImpl implements IRoleDao {
 	@Override
 	public Role getById(Long id) {
 
-		Role role = session.get(Role.class, id);
+		Role role = (Role) session.get(Role.class, id);
 
 		return role;
 	}
@@ -32,7 +32,7 @@ public class RoleDaoImpl implements IRoleDao {
 	public Role getByType(RoleEnum type) {
 
 		Role role = (Role) session.createCriteria(Role.class)
-				.add(Restrictions.eq("type", type.toString()))
+				.add(Restrictions.eq("type", type))
 				.uniqueResult();
 
 		return role;

@@ -21,7 +21,7 @@ public class UserDaoImpl implements IUserDao {
 
     public User getById(Long id) {
 
-        User user = session.get(User.class, id);
+        User user = (User) session.get(User.class, id);
 
         return user;
     }

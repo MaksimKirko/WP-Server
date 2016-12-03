@@ -13,7 +13,7 @@ public interface IViolationDao {
 
     Violation getById(Long id);
 
-    public List<Violation> getByType(ViolationEnum type);
+    public Violation getByType(ViolationEnum type);
 
     List<Violation> getAll();
 

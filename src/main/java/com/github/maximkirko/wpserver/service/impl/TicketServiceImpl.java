@@ -3,9 +3,9 @@ package com.github.maximkirko.wpserver.service.impl;
 import com.github.maximkirko.wpserver.dao.api.ITicketDao;
 import com.github.maximkirko.wpserver.datamodel.Ticket;
 import com.github.maximkirko.wpserver.service.api.ITicketService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class TicketServiceImpl implements ITicketService {
 
-    @Inject
+    @Autowired
     private ITicketDao ticketDao;
 
     @Override

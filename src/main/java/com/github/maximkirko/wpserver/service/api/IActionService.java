@@ -13,7 +13,7 @@ public interface IActionService {
 
     Action getById(Long id);
 
-    List<Action> getByType(ActionEnum type);
+    Action getByType(ActionEnum type);
 
     List<Action> getAll();
 

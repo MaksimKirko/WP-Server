@@ -13,9 +13,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <common.project.version>1.0</common.project.version>
         <jdk.version>1.8</jdk.version>
-        <spring.version>4.0.3.RELEASE</spring.version>
-        <spring.security.version>3.2.3.RELEASE</spring.security.version>
-        <hibernate.version>5.2.4.Final</hibernate.version>
+        <!--<spring.version>4.0.3.RELEASE</spring.version>-->
+        <!--<spring.security.version>3.2.3.RELEASE</spring.security.version>-->
+        <!--<hibernate.version>5.2.4.Final</hibernate.version>-->
+
+        <spring.version>4.2.0.RELEASE</spring.version>
+        <spring.security.version>4.0.1.RELEASE</spring.security.version>
+        <hibernate.version>4.3.6.Final</hibernate.version>
+
         <jstl.version>1.2</jstl.version>
     </properties>
 

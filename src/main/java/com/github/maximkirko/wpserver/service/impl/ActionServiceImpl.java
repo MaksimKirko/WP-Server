@@ -4,9 +4,9 @@ import com.github.maximkirko.wpserver.dao.api.IActionDao;
 import com.github.maximkirko.wpserver.datamodel.action.Action;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
 import com.github.maximkirko.wpserver.service.api.IActionService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class ActionServiceImpl implements IActionService {
 
-    @Inject
+    @Autowired
     private IActionDao actionDao;
 
     @Override
@@ -25,7 +25,7 @@ public class ActionServiceImpl implements IActionService {
     }
 
     @Override
-    public List<Action> getByType(ActionEnum type) {
+    public Action getByType(ActionEnum type) {
         return actionDao.getByType(type);
     }
 

@@ -13,7 +13,7 @@ public interface IViolationService {
 
     Violation getById(Long id);
 
-    List<Violation> getByType(ViolationEnum type);
+    Violation getByType(ViolationEnum type);
 
     List<Violation> getAll();
 

@@ -4,9 +4,9 @@ import com.github.maximkirko.wpserver.dao.api.IViolationDao;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.service.api.IViolationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class ViolationServiceImpl implements IViolationService {
 
-    @Inject
+    @Autowired
     private IViolationDao violationDao;
 
     @Override
@@ -24,7 +24,7 @@ public class ViolationServiceImpl implements IViolationService {
     }
 
     @Override
-    public List<Violation> getByType(ViolationEnum type) {
+    public Violation getByType(ViolationEnum type) {
         return violationDao.getByType(type);
     }
 

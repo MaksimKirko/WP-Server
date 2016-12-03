@@ -4,9 +4,9 @@ package com.github.maximkirko.wpserver.service.impl;
 import com.github.maximkirko.wpserver.dao.api.IUserDao;
 import com.github.maximkirko.wpserver.datamodel.User;
 import com.github.maximkirko.wpserver.service.api.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import java.util.List;
 
 /**
@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements IUserService {
 
-    @Inject
+    @Autowired
     private IUserDao userDao;
 
     @Override

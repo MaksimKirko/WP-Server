@@ -2,6 +2,7 @@ package com.github.maximkirko.wpserver.service.impl;
 
 
 import com.github.maximkirko.wpserver.datamodel.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,14 +11,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service("customUserDetailsService")
 public class CustomUserDetailsService implements UserDetailsService {
 
-    @Inject
+    @Autowired
     private com.github.maximkirko.wpserver.service.api.IUserService userService;
 
     @Transactional(readOnly = true)

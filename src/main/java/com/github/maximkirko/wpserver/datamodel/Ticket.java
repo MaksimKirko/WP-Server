@@ -39,6 +39,7 @@ public class Ticket {
     }
 
     @Column(name = "type", unique = false, nullable = false, length = 128)
+    @Enumerated(EnumType.STRING)
     public TicketEnum getType() {
         return type;
     }

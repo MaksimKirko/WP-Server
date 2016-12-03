@@ -1,22 +1,13 @@
 import com.github.maximkirko.wpserver.datamodel.*;
 import com.github.maximkirko.wpserver.datamodel.action.Action;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
-import com.github.maximkirko.wpserver.datamodel.violation.Violation;
-import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.datamodel.violation.impl.ParkingOnGrass;
-import com.github.maximkirko.wpserver.service.api.IActionService;
-import com.github.maximkirko.wpserver.service.api.ITicketService;
-import com.github.maximkirko.wpserver.service.api.IUserService;
-import com.github.maximkirko.wpserver.service.api.IViolationService;
-import com.github.maximkirko.wpserver.service.impl.ActionServiceImpl;
-import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
+import com.github.maximkirko.wpserver.service.api.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import javax.inject.Inject;
-import java.util.*;
 
 /**
  * Created by MadMax on 30.11.2016.
@@ -25,17 +16,20 @@ import java.util.*;
 @ContextConfiguration(locations = "classpath:app_context.xml")
 public class TicketServiceTest {
 
-    @Inject
+    @Autowired
     private ITicketService ticketService;
 
-    @Inject
+    @Autowired
     private IViolationService violationService;
 
-    @Inject
+    @Autowired
     private IActionService actionService;
 
-    @Inject
+    @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IRoleService roleService;
 
     @Test
     public void defaultTest() {
@@ -63,7 +57,7 @@ public class TicketServiceTest {
 //    public void violationInsertTest() {
 //
 //        Action action = new Action();
-//        action.setType(ActionEnum.CallATowTrack);
+//        action.setType(ActionEnum.CallATowTruck);
 //        action.setDescription("desc");
 //
 //        actionService.save(action);
@@ -91,7 +85,7 @@ public class TicketServiceTest {
 //        ticket.setLicensePlate("LP 1234");
 //
 //        Action action = new Action();
-//        action.setType(ActionEnum.CallATowTrack);
+//        action.setType(ActionEnum.CallATowTruck);
 //        action.setDescription("desc");
 //
 //        Violation violation = new Violation();
@@ -117,22 +111,27 @@ public class TicketServiceTest {
 //
 //    }
 
-//
-//    @Test
-//    public void insertUserTest() {
-//
+
+    @Test
+    public void insertUserTest() {
+
 //        User user = new User();
-//        user.setLogin("bad");
-//        user.setPassword("qwerty");
-//        user.setFirstName("Maxim");
-//        user.setLastName("Kirko");
-//        user.setEmail("email");
-//
-//        Role role = new Role();
-//        role.setType(RoleEnum.ADMIN);
-//
+//        user.setLogin("kek");
+//        user.setPassword("$2a$10$8jQqUK4f4fttnOE6T80lYu8SnNftLu2hmXgAyrcSmJznMUZo93DWW");
+//        user.setFirstName("Pavel");
+//        user.setLastName("Bulaj");
+//        user.setEmail("another email");
+
+        Action action = actionService.getByType(ActionEnum.CallATowTruck);
+
+        System.out.println(action.toString());
+
+        Role role = roleService.getByType(RoleEnum.ADMIN);
+
+        System.out.println(role.toString());
+
 //        user.setRole(role);
 //
 //        userService.save(user);
-//    }
+    }
 }

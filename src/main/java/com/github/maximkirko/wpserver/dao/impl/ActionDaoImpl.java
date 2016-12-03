@@ -26,19 +26,19 @@ public class ActionDaoImpl implements IActionDao {
     @Override
     public Action getById(Long id) {
 
-        Action action = session.get(Action.class, id);
+        Action action = (Action) session.get(Action.class, id);
 
         return action;
     }
 
     @Override
-    public List<Action> getByType(ActionEnum type) {
+    public Action getByType(ActionEnum type) {
 
-        List<Action> actions = session.createCriteria(Action.class)
-                .add(Restrictions.eq("type", type.toString()))
-                .list();
+        Action action = (Action) session.createCriteria(Action.class)
+                .add(Restrictions.eq("type", type))
+                .uniqueResult();
 
-        return actions;
+        return action;
     }
 
     @Override

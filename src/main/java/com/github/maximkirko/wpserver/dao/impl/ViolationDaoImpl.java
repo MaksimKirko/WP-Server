@@ -26,19 +26,19 @@ public class ViolationDaoImpl implements IViolationDao {
     @Override
     public Violation getById(Long id) {
 
-        Violation violation = session.get(Violation.class, id);
+        Violation violation = (Violation) session.get(Violation.class, id);
 
         return violation;
     }
 
     @Override
-    public List<Violation> getByType(ViolationEnum type) {
+    public Violation getByType(ViolationEnum type) {
 
-        List<Violation> violations = session.createCriteria(Violation.class)
+        Violation violation = (Violation) session.createCriteria(Violation.class)
                 .add(Restrictions.eq("type", type.toString()))
-                .list();
+                .uniqueResult();
 
-        return violations;
+        return violation;
     }
 
     @Override

@@ -23,7 +23,7 @@ public class TicketDaoImpl implements ITicketDao {
 
     public Ticket getById(Long id) {
 
-        Ticket ticket = session.get(Ticket.class, id);
+        Ticket ticket = (Ticket) session.get(Ticket.class, id);
 
         return ticket;
     }
