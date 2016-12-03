@@ -18,16 +18,32 @@ import static javax.persistence.GenerationType.IDENTITY;
         @UniqueConstraint(columnNames = "type")})
 public class Violation {
 
-    private Long id;
-    private ViolationEnum type;
-    private String description;
-    private double fee;
-    private Set<Action> actions;
-    private Set<Ticket> tickets;
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "type", unique = true, nullable = false, length = 128)
+    @Enumerated(EnumType.STRING)
+    private ViolationEnum type;
+
+    @Column(name = "description", nullable = false, length = 512)
+    private String description;
+
+    @Column(name = "fee", nullable = false)
+    private double fee;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "violation_2_action", joinColumns = {
+            @JoinColumn(name = "violation_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "action_id",
+                    nullable = false, updatable = false)})
+    private Set<Action> actions;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "violation")
+    private Set<Ticket> tickets;
+
+
     public Long getId() {
         return id;
     }
@@ -36,7 +52,6 @@ public class Violation {
         this.id = id;
     }
 
-    @Column(name = "type", unique = true, nullable = false, length = 128)
     public ViolationEnum getType() {
         return this.type;
     }
@@ -45,7 +60,6 @@ public class Violation {
         this.type = type;
     }
 
-    @Column(name = "description", nullable = false, length = 512)
     public String getDescription() {
         return description;
     }
@@ -54,7 +68,6 @@ public class Violation {
         this.description = description;
     }
 
-    @Column(name = "fee", nullable = false)
     public double getFee() {
         return fee;
     }
@@ -63,11 +76,6 @@ public class Violation {
         this.fee = fee;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "violation_2_action", joinColumns = {
-            @JoinColumn(name = "violation_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "action_id",
-                    nullable = false, updatable = false)})
     public Set<Action> getActions() {
         return actions;
     }
@@ -76,7 +84,6 @@ public class Violation {
         this.actions = actions;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "violation")
     public Set<Ticket> getTickets() {
         return tickets;
     }

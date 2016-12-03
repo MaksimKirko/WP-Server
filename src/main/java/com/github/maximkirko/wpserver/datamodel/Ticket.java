@@ -17,19 +17,42 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "ticket")
 public class Ticket {
 
-    private Long id;
-    private TicketEnum type;
-    private Set<Photo> violationPhotos;
-    private Violation violation;
-    private String licensePlate;
-    private String address;
-    private String location;
-    private Date date;
-    private String comment;
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "type", unique = false, nullable = false, length = 128)
+    @Enumerated(EnumType.STRING)
+    private TicketEnum type;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "ticket_2_photo", joinColumns = {
+            @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "photo_id",
+                    nullable = false, updatable = false)})
+    private Set<Photo> violationPhotos;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "violation_id", nullable = false, updatable = false)
+    private Violation violation;
+
+    @Column(name = "license_plate", length = 128)
+    private String licensePlate;
+
+    @Column(name = "address", length = 256)
+    private String address;
+
+    @Column(name = "location", length = 128)
+    private String location;
+
+    @Column(name = "date")
+    private Date date;
+
+    @Column(name = "comment", length = 512)
+    private String comment;
+
+
     public Long getId() {
         return id;
     }
@@ -38,8 +61,6 @@ public class Ticket {
         this.id = id;
     }
 
-    @Column(name = "type", unique = false, nullable = false, length = 128)
-    @Enumerated(EnumType.STRING)
     public TicketEnum getType() {
         return type;
     }
@@ -48,11 +69,6 @@ public class Ticket {
         this.type = type;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "ticket_2_photo", joinColumns = {
-            @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "photo_id",
-                    nullable = false, updatable = false)})
     public Set<Photo> getViolationPhotos() {
         return violationPhotos;
     }
@@ -61,8 +77,6 @@ public class Ticket {
         this.violationPhotos = violationPhotos;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "violation_id", nullable = false, updatable = false)
     public Violation getViolation() {
         return violation;
     }
@@ -71,7 +85,6 @@ public class Ticket {
         this.violation = violation;
     }
 
-    @Column(name = "license_plate", length = 128)
     public String getLicensePlate() {
         return licensePlate;
     }
@@ -80,7 +93,6 @@ public class Ticket {
         this.licensePlate = licensePlate;
     }
 
-    @Column(name = "address", length = 256)
     public String getAddress() {
         return address;
     }
@@ -89,7 +101,6 @@ public class Ticket {
         this.address = address;
     }
 
-    @Column(name = "location", length = 128)
     public String getLocation() {
         return location;
     }
@@ -98,7 +109,6 @@ public class Ticket {
         this.location = location;
     }
 
-    @Column(name = "date")
     public Date getDate() {
         return date;
     }
@@ -107,7 +117,6 @@ public class Ticket {
         this.date = date;
     }
 
-    @Column(name = "comment", length = 512)
     public String getComment() {
         return comment;
     }

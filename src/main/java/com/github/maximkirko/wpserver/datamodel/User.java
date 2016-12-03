@@ -5,116 +5,117 @@ import org.hibernate.validator.constraints.NotEmpty;
 import javax.persistence.*;
 
 @Entity
-@Table(name="\"user\"")
+@Table(name = "\"user\"")
 public class User {
 
-	@Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@NotEmpty
-	@Column(name="login", unique=true, nullable=false)
-	private String login;
-	
-	@NotEmpty
-	@Column(name="password", nullable=false)
-	private String password;
-		
-	@NotEmpty
-	@Column(name="first_name", nullable=false)
-	private String firstName;
+    @NotEmpty
+    @Column(name = "login", unique = true, nullable = false)
+    private String login;
 
-	@NotEmpty
-	@Column(name="last_name", nullable=false)
-	private String lastName;
+    @NotEmpty
+    @Column(name = "password", nullable = false)
+    private String password;
 
-	@NotEmpty
-	@Column(name="email", nullable=false)
-	private String email;
+    @NotEmpty
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-	@NotEmpty
-	@Column(name="state", nullable=false)
-	private String state=State.ACTIVE.getState();
+    @NotEmpty
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
 
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name = "role_id", nullable = false)
-	private Role role;
+    @NotEmpty
+    @Column(name = "email", nullable = false)
+    private String email;
 
-	public Long getId() {
-		return id;
-	}
+    @NotEmpty
+    @Column(name = "state", nullable = false)
+    private String state = State.ACTIVE.getState();
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
-	public String getLogin() {
-		return login;
-	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getLogin() {
+        return login;
+    }
 
-	public String getFirstName() {
-		return firstName;
-	}
+    public void setLogin(String login) {
+        this.login = login;
+    }
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getFirstName() {
+        return firstName;
+    }
 
-	public String getEmail() {
-		return email;
-	}
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public String getState() {
-		return state;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setState(String state) {
-		this.state = state;
-	}
+    public String getEmail() {
+        return email;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
+    public String getState() {
+        return state;
+    }
 
-	@Override
-	public String toString() {
-		return "User{" +
-				"id=" + id +
-				", login='" + login + '\'' +
-				", password='" + password + '\'' +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", email='" + email + '\'' +
-				", state='" + state + '\'' +
-				", role=" + role +
-				'}';
-	}
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", state='" + state + '\'' +
+                ", role=" + role +
+                '}';
+    }
 }

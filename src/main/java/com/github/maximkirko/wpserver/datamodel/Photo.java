@@ -1,6 +1,12 @@
 package com.github.maximkirko.wpserver.datamodel;
 
+import javax.imageio.ImageIO;
 import javax.persistence.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -15,13 +21,18 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Table(name = "photo")
 public class Photo {
 
-    private Long id;
-    private byte[] photo;
-    private Set<Ticket> tickets;
-
     @Id
     @GeneratedValue(strategy = IDENTITY)
     @Column(name = "id", unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "photo", unique = true, nullable = false)
+    private byte[] photo;
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "violationPhotos")
+    private Set<Ticket> tickets;
+
+
     public Long getId() {
         return id;
     }
@@ -30,7 +41,6 @@ public class Photo {
         this.id = id;
     }
 
-    @Column(name = "photo", unique = true, nullable = false)
     public byte[] getPhoto() {
         return photo;
     }
@@ -39,7 +49,6 @@ public class Photo {
         this.photo = photo;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "violationPhotos")
     public Set<Ticket> getTickets() {
         return tickets;
     }
@@ -59,4 +68,26 @@ public class Photo {
     public Photo() {
 
     }
+
+    public static BufferedImage getBufferedImagePhoto(byte[] imageInByte) throws IOException {
+
+        InputStream in = new ByteArrayInputStream(imageInByte);
+        BufferedImage bImageFromConvert = ImageIO.read(in);
+
+        return bImageFromConvert;
+    }
+
+    public static byte[] getByteArrayPhoto(BufferedImage img) throws IOException {
+
+        byte[] imageInByte;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(img, "png", baos);
+        baos.flush();
+        imageInByte = baos.toByteArray();
+        baos.close();
+
+        return imageInByte;
+    }
+
 }
