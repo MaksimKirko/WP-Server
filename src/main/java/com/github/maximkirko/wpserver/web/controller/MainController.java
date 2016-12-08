@@ -8,9 +8,12 @@ import com.github.maximkirko.wpserver.service.api.IRoleService;
 import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
+import com.github.maximkirko.wpserver.util.PhotoConverter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,12 +91,21 @@ public class MainController {
         List<Ticket> inputTickets = ticketService.getAll();
 
         List<String> rusViolations = ViolationEnum.getRusViolationsList();
+        List<ViolationEnum> violations = ViolationEnum.getViolations();
+
 
         List<String> rusActions = ActionEnum.getRusActionList();
 
         ModelAndView model = new ModelAndView();
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+
+        PhotoConverter photoConverter = new PhotoConverter();
+
+        model.addObject("photoConverter", photoConverter);
+        model.addObject("dateFormat", dateFormat);
         model.addObject("rusActions", rusActions);
+        model.addObject("violations", violations);
         model.addObject("rusViolations", rusViolations);
         model.addObject("inputTickets",inputTickets);
         model.setViewName("app");
@@ -101,15 +114,15 @@ public class MainController {
 
     }
 
+//    @RequestMapping(value = "/update_fields", method = )
+
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
     public String accessDeniedPage(ModelMap model) {
         model.addAttribute("user", getPrincipal());
         return "accessDenied";
     }
-//
-//
-//
+
 //    @RequestMapping(value = "/logout", method = RequestMethod.GET)
 //    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
 //        Authentication auth = SecurityContextHolder.getContext().getAuthentication();

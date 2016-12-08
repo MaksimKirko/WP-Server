@@ -80,7 +80,7 @@
         }
 
         .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-            width: 250px;
+            width: 100%;
         }
 
         .table-responsive {
@@ -89,9 +89,9 @@
         }
     </style>
 </head>
-<body>
-    <div class="container">
-            <c:url value="/j_spring_security_logout" var="logoutUrl" />
+<body style="padding: 20px;">
+    <div class="container" style="width: 100%; padding: 0px; margin: 0px;">
+            <c:url value="/logout" var="logoutUrl" />
 
             <!-- csrf for log out-->
             <form action="${logoutUrl}" method="post" id="logoutForm">
@@ -141,7 +141,7 @@
                             aria-expanded="false">
 
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violation"></td>
+                            <td class="violation"><c:out value="${item.violation.type}"/></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>
@@ -165,8 +165,8 @@
                                             <td class="">...</td>
                                             <td class="">...</td>
                                             <td class="">...</td>
-                                            <td class="">
-                                                <div class="btn-group btn-flex" style="width: 250px;">
+                                            <td class="" style="width: 375px;">
+                                                <div class="btn-group btn-flex" style="width: 100%;">
                                                     <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
                                                         <c:forEach var="violation" items="${rusViolations}">
                                                             <option value=""><c:out value="${violation}"></c:out></option>
@@ -174,8 +174,8 @@
                                                     </select>
                                                 </div>
                                             </td>
-                                            <td>
-                                                <div class="btn-group btn-flex">
+                                            <td style="width: 240px;">
+                                                <div class="btn-group btn-flex" style="width: inherit;">
                                                     <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                                         <c:forEach var="action" items="${rusActions}">
                                                             <option value=""><c:out value="${action}"></c:out></option>
@@ -184,27 +184,15 @@
                                                 </div>
                                             </td>
                                             <td class=""></td>
-
                                         </tr>
                                         </tbody>
                                     </table>
                                     <div id="controls">
                                         <div class="btn-group btn-flex">
-                                            <button type="button" class="btn btn-info">Action</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="#">Separated link</a></li>
-                                            </ul>
+                                            <button id="btnProcess${item.id}" type="button" class="btn btn-info btnProcess">Обработать заявку</button>
+                                            <button id="btnDecline${item.id}" type="button" class="btn btn-danger btnDecline">Отклонить заявку</button>
                                         </div>
                                     </div>
-
                                 </div>
                             </td>
                         </tr>

@@ -84,41 +84,41 @@ public class ServiceTest {
 //
 //    }
 
-    @Test
-    public void ticketInsertTest() throws IOException {
-
-        Ticket ticket = new Ticket();
-        ticket.setType(TicketEnum.NOT_PROCESSED);
-        ticket.setDate(new Date());
-        ticket.setLocation("loc");
-        ticket.setLicensePlate("LP 1234");
-
-
-        Violation violation = violationService.getById(1l);
-        Action action = actionService.getById(1l);
-
-        Set<Action> actions = new HashSet<Action>();
-        actions.add(action);
-
-        violation.setActions(actions);
-
-        ticket.setViolation(violation);
-
-        Photo photo = new Photo();
-
-        BufferedImage originalImage = ImageIO.read(new File(
-                "db//model.png"));
-
-        photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
-
-        Set<Photo> photoSet = new HashSet<>();
-        photoSet.add(photo);
-
-        ticket.setViolationPhotos(photoSet);
-
-        ticketService.save(ticket);
-
-    }
+//    @Test
+//    public void ticketInsertTest() throws IOException {
+//
+//        Ticket ticket = new Ticket();
+//        ticket.setType(TicketEnum.NOT_PROCESSED);
+//        ticket.setDate(new Date());
+//        ticket.setLocation("loc");
+//        ticket.setLicensePlate("LP 1234");
+//
+//
+//        Violation violation = violationService.getById(1l);
+//        Action action = actionService.getById(1l);
+//
+//        Set<Action> actions = new HashSet<Action>();
+//        actions.add(action);
+//
+//        violation.setActions(actions);
+//
+//        ticket.setViolation(violation);
+//
+//        Photo photo = new Photo();
+//
+//        BufferedImage originalImage = ImageIO.read(new File(
+//                "db//model.png"));
+//
+//        photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
+//
+//        Set<Photo> photoSet = new HashSet<>();
+//        photoSet.add(photo);
+//
+//        ticket.setViolationPhotos(photoSet);
+//
+//        ticketService.save(ticket);
+//
+//    }
 
 //    @Test
 //    public void ticketGetTest() throws IOException {

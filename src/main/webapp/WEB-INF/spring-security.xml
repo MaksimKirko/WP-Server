@@ -12,7 +12,7 @@
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 
 		<form-login  login-page="/login"
-                     default-target-url="/welcome"
+                     default-target-url="/app"
                      authentication-failure-url="/login?error"
                      username-parameter="login"
                      password-parameter="password" />
