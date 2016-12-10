@@ -1,7 +1,9 @@
 package com.github.maximkirko.wpserver.web.controller;
 
+import com.github.maximkirko.wpserver.datamodel.Photo;
 import com.github.maximkirko.wpserver.datamodel.Role;
 import com.github.maximkirko.wpserver.datamodel.Ticket;
+import com.github.maximkirko.wpserver.datamodel.TicketEnum;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
 import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.service.api.IRoleService;
@@ -9,22 +11,23 @@ import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
 import com.github.maximkirko.wpserver.util.PhotoConverter;
+import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * Created by Pavel on 13.11.2016.
@@ -88,7 +91,26 @@ public class MainController {
     @RequestMapping(value = "/app**", method = RequestMethod.GET)
     public ModelAndView appPage() {
 
-        List<Ticket> inputTickets = ticketService.getAll();
+        List<Ticket> allTickets = ticketService.getAll();
+
+        List<Ticket> inputTickets = new ArrayList<>();
+        List<Ticket> processedTickets = new ArrayList<>();
+        List<Ticket> archivedTickets = new ArrayList<>();
+
+        for (Ticket t : allTickets) {
+            if(t.getType() == TicketEnum.NOT_PROCESSED)
+            {
+                inputTickets.add(t);
+            }
+            else if(t.getType() == TicketEnum.PROCESSED)
+            {
+                processedTickets.add(t);
+            }
+            else
+            {
+                archivedTickets.add(t);
+            }
+        }
 
         List<String> rusViolations = ViolationEnum.getRusViolationsList();
         List<ViolationEnum> violations = ViolationEnum.getViolations();
@@ -100,21 +122,50 @@ public class MainController {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
-        PhotoConverter photoConverter = new PhotoConverter();
 
-        model.addObject("photoConverter", photoConverter);
+
+
         model.addObject("dateFormat", dateFormat);
         model.addObject("rusActions", rusActions);
         model.addObject("violations", violations);
         model.addObject("rusViolations", rusViolations);
         model.addObject("inputTickets",inputTickets);
+        model.addObject("processedTickets",processedTickets);
+        model.addObject("archivedTickets",archivedTickets);
         model.setViewName("app");
 
         return model;
 
     }
 
-//    @RequestMapping(value = "/update_fields", method = )
+    @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
+    public ModelAndView ticketPage(@PathVariable("id")long id) throws UnsupportedEncodingException {
+        Ticket chosenTicket = ticketService.getById(id);
+        PhotoConverter photoConverter = new PhotoConverter();
+        List<String> rusViolations = ViolationEnum.getRusViolationsList();
+        List<ViolationEnum> violations = ViolationEnum.getViolations();
+        List<String> rusActions = ActionEnum.getRusActionList();
+
+        List<String> chosenStrPhotos = new ArrayList<>();
+        for (Photo p : chosenTicket.getViolationPhotos())
+        {
+//            byte[] bytes = p.getPhoto();
+//            byte[] encodedPhoto = java.util.Base64.getEncoder().encode(bytes);
+//            String strPhoto = new String(encodedPhoto, "UTF-8");
+
+            chosenStrPhotos.add("data:image/png;base64," + org.apache.commons.codec.binary.Base64.encodeBase64(p.getPhoto()));
+        }
+
+        ModelAndView model = new ModelAndView();
+        model.addObject("photoConverter", photoConverter);
+        model.addObject("rusActions", rusActions);
+        model.addObject("violations", violations);
+        model.addObject("rusViolations", rusViolations);
+        model.addObject("chosenStrPhotos", chosenStrPhotos);
+        model.addObject("chosenTicket", chosenTicket);
+        model.setViewName("ticket");
+        return model;
+    }
 
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)

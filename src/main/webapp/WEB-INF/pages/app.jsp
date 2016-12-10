@@ -23,8 +23,10 @@
     <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/custom.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-select.css" />" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.6/jq-2.2.3/dt-1.10.12/b-1.2.2/datatables.min.css"/>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.6/jq-2.2.3/dt-1.10.12/b-1.2.2/datatables.min.js"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <%--<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
     <script src="<c:url value="/resources/js/bootstrap-select.js" />"></script>
@@ -37,7 +39,10 @@
 
     <style>
         #user {
-            margin-left: 750px;
+            border: 4px;
+            border-radius: 3px;
+            border: #d58512;
+            margin-left: 850px;
         }
         #controls {
             align-content: left;
@@ -133,67 +138,19 @@
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
+                        <th class="">Заявка...</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${inputTickets}" var="item">
-                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
-                            aria-expanded="false">
-
+                        <tr>
                             <td class="id"><c:out value="${item.id}"/></td>
                             <td class="violation"><c:out value="${item.violation.type}"/></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" class="hiddenRow">
-                                <div class="accordion-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="">Фото №1</th>
-                                            <th class="">Фото №2</th>
-                                            <th class="">Фото №3</th>
-                                            <th class="">Вид нарушения</th>
-                                            <th class="">Действия</th>
-                                            <th class="">Комментарий</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="" style="width: 375px;">
-                                                <div class="btn-group btn-flex" style="width: 100%;">
-                                                    <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
-                                                        <c:forEach var="violation" items="${rusViolations}">
-                                                            <option value=""><c:out value="${violation}"></c:out></option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td style="width: 240px;">
-                                                <div class="btn-group btn-flex" style="width: inherit;">
-                                                    <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
-                                                        <c:forEach var="action" items="${rusActions}">
-                                                            <option value=""><c:out value="${action}"></c:out></option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class=""></td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="controls">
-                                        <div class="btn-group btn-flex">
-                                            <button id="btnProcess${item.id}" type="button" class="btn btn-info btnProcess">Обработать заявку</button>
-                                            <button id="btnDecline${item.id}" type="button" class="btn btn-danger btnDecline">Отклонить заявку</button>
-                                        </div>
-                                    </div>
-                                </div>
+                            <td class="">
+                                <a href="<c:url value="/ticket/${item.id}"/>" type="button" class="btn btn-info">Просмотреть заявку</a>
                             </td>
                         </tr>
                     </c:forEach>
