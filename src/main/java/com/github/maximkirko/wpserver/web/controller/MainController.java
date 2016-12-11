@@ -11,18 +11,22 @@ import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
 import com.github.maximkirko.wpserver.util.PhotoConverter;
+import org.apache.commons.codec.binary.Base64;
 import org.aspectj.weaver.ast.Var;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.codec.Base64;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -122,9 +126,6 @@ public class MainController {
 
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
-
-
-
         model.addObject("dateFormat", dateFormat);
         model.addObject("rusActions", rusActions);
         model.addObject("violations", violations);
@@ -149,14 +150,25 @@ public class MainController {
         List<String> chosenStrPhotos = new ArrayList<>();
         for (Photo p : chosenTicket.getViolationPhotos())
         {
+
+            byte[] encodeBase64 = Base64.encodeBase64(p.getPhoto());
+            String base64Encoded = new String(encodeBase64, "UTF-8");
+
+            chosenStrPhotos.add("data:image/png;base64," + base64Encoded);
+
+
 //            byte[] bytes = p.getPhoto();
 //            byte[] encodedPhoto = java.util.Base64.getEncoder().encode(bytes);
 //            String strPhoto = new String(encodedPhoto, "UTF-8");
-
-            chosenStrPhotos.add("data:image/png;base64," + org.apache.commons.codec.binary.Base64.encodeBase64(p.getPhoto()));
+//
+//            chosenStrPhotos.add("data:image/png;base64," + p.getPhoto());
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+
 
         ModelAndView model = new ModelAndView();
+
+        model.addObject("dateFormat", dateFormat);
         model.addObject("photoConverter", photoConverter);
         model.addObject("rusActions", rusActions);
         model.addObject("violations", violations);

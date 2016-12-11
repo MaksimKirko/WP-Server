@@ -1,5 +1,6 @@
 import com.github.maximkirko.wpserver.datamodel.*;
 import com.github.maximkirko.wpserver.datamodel.action.Action;
+import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 import com.github.maximkirko.wpserver.service.api.*;
 import org.junit.Test;
@@ -16,6 +17,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -45,78 +47,43 @@ public class ServiceTest {
 
     }
 
-    //    @Test
-//    public void deleteTest() {
-//
-//        ticketService.delete(3l);
-//
-//    }
-//
-//    @Test
-//    public void actionInsertTest() {
-//
-//        Action action = new Action();
-//        action.setType(ActionEnum.AssignFee);
-//        action.setDescription("desc");
-//
-//        actionService.save(action);
-//    }
-//
-//    @Test
-//    public void violationInsertTest() {
-//
-//        Action action = new Action();
-//        action.setType(ActionEnum.CallATowTruck);
-//        action.setDescription("desc");
-//
-//        actionService.save(action);
-//
-//        Violation violation = new Violation();
-//        violation.setType(ViolationEnum.ParkingAtBusStop);
-//        violation.setFee(50f);
-//        violation.setDescription("desc");
-//        Set<Action> actions = new HashSet<>();
-//        actions.add(action);
-//
-//        violation.setActions(actions);
-//
-//        violationService.save(violation);
-//
-//    }
-
 //    @Test
 //    public void ticketInsertTest() throws IOException {
 //
-//        Ticket ticket = new Ticket();
-//        ticket.setType(TicketEnum.NOT_PROCESSED);
-//        ticket.setDate(new Date());
-//        ticket.setLocation("loc");
-//        ticket.setLicensePlate("LP 1234");
 //
+//        for(int i = 0; i < 20; i++) {
+//            Ticket ticket = new Ticket();
+//            ticket.setType(TicketEnum.NOT_PROCESSED);
+//            ticket.setDate(new Date());
+//            ticket.setLocation("loc");
+//            ticket.setLicensePlate("435" + i + " UY-3");
+//            ticket.setComment("comment comment comment comment comment comment comment");
+//            ticket.setAddress("пр. Горького " + i);
 //
-//        Violation violation = violationService.getById(1l);
-//        Action action = actionService.getById(1l);
+//            Violation violation = violationService.getById(i%2==0?1l:2l);
+//            Action action = actionService.getById(i%2==0?1l:2l);
 //
-//        Set<Action> actions = new HashSet<Action>();
-//        actions.add(action);
+//            Set<Action> actions = new HashSet<Action>();
+//            actions.add(action);
 //
-//        violation.setActions(actions);
+//            violation.setActions(actions);
 //
-//        ticket.setViolation(violation);
+//            ticket.setViolation(violation);
 //
-//        Photo photo = new Photo();
+//            Photo photo = new Photo();
 //
-//        BufferedImage originalImage = ImageIO.read(new File(
-//                "db//model.png"));
+//            BufferedImage originalImage = ImageIO.read(new File(
+//                    "db//model.png"));
 //
-//        photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
+//            photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
 //
-//        Set<Photo> photoSet = new HashSet<>();
-//        photoSet.add(photo);
+//            Set<Photo> photoSet = new HashSet<>();
+//            photoSet.add(photo);
 //
-//        ticket.setViolationPhotos(photoSet);
+//            ticket.setViolationPhotos(photoSet);
 //
-//        ticketService.save(ticket);
+//            ticketService.save(ticket);
+//        }
 //
 //    }
 
