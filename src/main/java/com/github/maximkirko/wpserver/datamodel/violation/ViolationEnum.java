@@ -31,26 +31,33 @@ public enum ViolationEnum {
     }
 
     public static ViolationEnum getViolation(String s) {
-        switch (s) {
-            case "Парковка на остановке маршрутных т/с":
-                return ParkingAtBusStop;
-            case "Парковка у/на железнодорожных путях":
-                return ParkingNearRailroad;
-            case "Парковка у дверей магазина":
-                return ParkingNearShop;
-            case "Парковка на мосту/эстакаде":
-                return ParkingOnBridge;
-            case "Парковка на перекрестке":
-                return ParkingOnCrossing;
-            case "Парковка на газоне":
-                return ParkingOnGrass;
-            case "Парковка ны левой стороне проезжей части":
-                return ParkingOnLeftSide;
-            case "Парковка на пешеходной дорожке":
-                return ParkingOnWalkway;
-            case "Парковка в зоне действия запрещающего знака":
-                return ParkingUnderSign;
+
+        for (ViolationEnum en : ViolationEnum.values()) {
+            if(en.toString().equals(s)) {
+                return en;
+            }
         }
+
+//        switch (s) {
+//            case "Парковка на остановке маршрутных т/с":
+//                return ParkingAtBusStop;
+//            case "Парковка у/на железнодорожных путях":
+//                return ParkingNearRailroad;
+//            case "Парковка у дверей магазина":
+//                return ParkingNearShop;
+//            case "Парковка на мосту/эстакаде":
+//                return ParkingOnBridge;
+//            case "Парковка на перекрестке":
+//                return ParkingOnCrossing;
+//            case "Парковка на газоне":
+//                return ParkingOnGrass;
+//            case "Парковка ны левой стороне проезжей части":
+//                return ParkingOnLeftSide;
+//            case "Парковка на пешеходной дорожке":
+//                return ParkingOnWalkway;
+//            case "Парковка в зоне действия запрещающего знака":
+//                return ParkingUnderSign;
+//        }
         return null;
     }
 

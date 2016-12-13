@@ -2,6 +2,7 @@ import com.github.maximkirko.wpserver.datamodel.*;
 import com.github.maximkirko.wpserver.datamodel.action.Action;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
+import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.service.api.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,6 +46,10 @@ public class ServiceTest {
     @Test
     public void defaultTest() {
 
+//        Violation v = violationService.getByType(ViolationEnum.ParkingOnBridge);
+//        System.out.println(v.toString());
+//        System.out.println(v.getClass().getSimpleName());
+//        System.out.print(ViolationEnum.ParkingOnBridge.name());
     }
 
 //    @Test

@@ -46,10 +46,12 @@
 
     <style>
         #user {
+            background-color: lavender;
+            width: 230px;
             border: 4px;
-            border-radius: 3px;
+            border-radius: 10px;
             border: #d58512;
-            margin-left: 850px;
+            margin-left: 1050px;
         }
         #controls {
             align-content: left;
@@ -95,13 +97,18 @@
             width: 100%;
         }
 
+        .tab-content {
+            background-color: white;
+            border-top: transparent;
+        }
+
         .table-responsive {
             overflow-x: visible !important;
             overflow-y: visible !important;
         }
     </style>
 </head>
-<body style="padding: 20px;">
+<body style="padding: 20px;" class="well">
     <div class="container" style="width: 100%; padding: 0px; margin: 0px;">
             <c:url value="/logout" var="logoutUrl" />
 
@@ -119,7 +126,7 @@
             </script>
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <div id="user">
+                <div id="user" class="well">
                     Здравствуйте, ${pageContext.request.userPrincipal.name} | <a
                         href="javascript:formSubmit()">Выйти</a>
                 </div>
@@ -135,7 +142,7 @@
                 <a href="#archivedTickets" data-toggle="tab" >Архив заявок</a>
             </li>
         </ul>
-        <div class="tab-content table-responsive">
+        <div class="tab-content table-responsive well">
             <div class="tab-pane active" id="inputTickets">
                 <table id="iTickets" class="table table-striped table-bordered table-hover" style="">
                     <thead>

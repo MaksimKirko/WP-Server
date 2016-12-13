@@ -5,10 +5,12 @@ import com.github.maximkirko.wpserver.datamodel.Role;
 import com.github.maximkirko.wpserver.datamodel.Ticket;
 import com.github.maximkirko.wpserver.datamodel.TicketEnum;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
+import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
 import com.github.maximkirko.wpserver.service.api.IRoleService;
 import com.github.maximkirko.wpserver.service.api.ITicketService;
 import com.github.maximkirko.wpserver.service.api.IUserService;
+import com.github.maximkirko.wpserver.service.api.IViolationService;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
 import com.github.maximkirko.wpserver.util.PhotoConverter;
 import org.apache.commons.codec.binary.Base64;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -48,13 +51,14 @@ public class MainController {
     @Autowired
     private ITicketService ticketService;
 
-    @RequestMapping(value = { "/", "/hello**" }, method = RequestMethod.GET)
+    @Autowired
+    private IViolationService violationService;
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView welcomePage() {
 
         ModelAndView model = new ModelAndView();
-        /*model.addObject("title", "Spring Security Hello World");
-        model.addObject("message", "This is welcome page!");*/
-        model.setViewName("hello");
+        model.setViewName("login");
         return model;
 
     }
@@ -150,18 +154,10 @@ public class MainController {
         List<String> chosenStrPhotos = new ArrayList<>();
         for (Photo p : chosenTicket.getViolationPhotos())
         {
-
             byte[] encodeBase64 = Base64.encodeBase64(p.getPhoto());
             String base64Encoded = new String(encodeBase64, "UTF-8");
 
             chosenStrPhotos.add("data:image/png;base64," + base64Encoded);
-
-
-//            byte[] bytes = p.getPhoto();
-//            byte[] encodedPhoto = java.util.Base64.getEncoder().encode(bytes);
-//            String strPhoto = new String(encodedPhoto, "UTF-8");
-//
-//            chosenStrPhotos.add("data:image/png;base64," + p.getPhoto());
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
 
@@ -179,6 +175,20 @@ public class MainController {
         return model;
     }
 
+    @RequestMapping(value = "/updateTicket", method = RequestMethod.POST)
+    public ModelAndView updateTicket(@RequestParam(value = "curViol")String curViol, @RequestParam(value = "curId")long curId) {
+        ModelAndView model = new ModelAndView();
+
+        Ticket newTicket = ticketService.getById(curId);
+
+        Violation v = violationService.getByType(ViolationEnum.getViolation(curViol));
+
+        newTicket.setViolation(v);
+        newTicket.setType(TicketEnum.PROCESSED);
+        ticketService.save(newTicket);
+        model.setViewName("redirect:/app");
+        return model;
+    }
 
     @RequestMapping(value = "/Access_Denied", method = RequestMethod.GET)
     public String accessDeniedPage(ModelMap model) {

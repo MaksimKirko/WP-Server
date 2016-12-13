@@ -35,7 +35,7 @@ public class ViolationDaoImpl implements IViolationDao {
     public Violation getByType(ViolationEnum type) {
 
         Violation violation = (Violation) session.createCriteria(Violation.class)
-                .add(Restrictions.eq("type", type.toString()))
+                .add(Restrictions.eq("type", type))
                 .uniqueResult();
 
         return violation;

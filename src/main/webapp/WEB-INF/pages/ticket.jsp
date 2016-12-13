@@ -1,4 +1,4 @@
-<%--
+<%@ page import="com.github.maximkirko.wpserver.datamodel.Ticket" %><%--
   Created by IntelliJ IDEA.
   User: Pavel
   Date: 09.12.2016
@@ -7,6 +7,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="utf-8">
@@ -55,6 +57,25 @@
             dots[slideIndex-1].className += " w3-red";
         }
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#btnUpdate").click(function () {
+                var curViol = $("#violPick").val();
+                var curId = ${chosenTicket.id};
+                var curActions;
+//                alert(curId);
+//                var posting = $.post("/updateTicket", {"curViol": curViol}, {"curId": curId});
+//                posting.done(function () {
+//                    alert(curViol);
+//                });
+                document.getElementById("idPlace").value = curId;
+                document.getElementById("violPlace").value = curViol;
+                document.getElementById("updateForm").submit();
+//                alert(document.getElementById("idPlace").value);
+            });
+        });
+
+    </script>
 
     <style>
         .mySlides {display:none}
@@ -67,8 +88,9 @@
             border: #d58512;
             margin-left: 850px;
         }
+
         #controls {
-            align-content: left;
+            text-align: -webkit-center;
         }
         .filter-option {
             color: white;
@@ -85,7 +107,7 @@
         }
         .btn-group {
             white-space: nowrap;
-            width: 250px;
+            width: 290px;
         }
 
         .btn-flex {
@@ -124,24 +146,26 @@
 <body>
     <div class="container" style="padding: 10px;">
         <div class="row well">
-            <table class="table table-bordered">
+            <table class="table table-bordered" style="background-color: white">
                 <tbody>
                 <tr>
-                    <td class="col-md-4 cell"><c:out value="${chosenTicket.violation.type}"/></td>
-                    <td class="col-md-4 cell"><c:out value="${chosenTicket.location}"/></td>
-                    <td class="col-md-4 cell"><c:out value="${dateFormat.format(chosenTicket.date)}"/></td>
+                    <td class="col-md-3 cell"><c:out value="Заявка №${chosenTicket.id}"/></td>
+                    <td class="col-md-3 cell"><c:out value="${chosenTicket.violation.type}"/></td>
+                    <td class="col-md-3 cell"><c:out value="${chosenTicket.location}"/></td>
+                    <td class="col-md-3 cell"><c:out value="${dateFormat.format(chosenTicket.date)}"/></td>
                 </tr>
                 <tr>
-                    <td class="col-md-4 cell">
+                    <td class="col-md-3 cell"><c:out value="Гос. номер: ${chosenTicket.licensePlate}"/></td>
+                    <td class="col-md-3 cell">
                         <div class="btn-group btn-flex" style="width: 100%;">
-                            <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
-                                <c:forEach var="violation" items="${rusViolations}">
-                                    <option value=""><c:out value="${violation}"></c:out></option>
+                            <select id ="violPick" class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
+                                <c:forEach var="violation" items="${violations}">
+                                    <option value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
                                 </c:forEach>
                             </select>
                         </div>
                     </td>
-                    <td class="col-md-4 cell">
+                    <td class="col-md-3 cell">
                         <div class="btn-group btn-flex" style="width: 100%;">
                             <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                 <c:forEach var="action" items="${rusActions}">
@@ -150,72 +174,26 @@
                             </select>
                         </div>
                     </td>
-                    <td class="col-md-4 cell"><c:out value="${chosenTicket.address}"/></td>
+                    <td class="col-md-3 cell"><c:out value="${chosenTicket.address}"/></td>
                 </tr>
                 </tbody>
             </table>
         </div>
-    <%--<table class="table table-bordered">--%>
-        <%--<thead>--%>
-        <%--<tr>--%>
-            <%--<c:forEach var="photo" items="${chosenStrPhotos}">--%>
-                <%--<th>Фото: </th>--%>
-            <%--</c:forEach>--%>
-            <%--<th class="">Вид нарушения</th>--%>
-            <%--<th class="">Действия</th>--%>
-            <%--<th class="">Комментарий</th>--%>
-        <%--</tr>--%>
-        <%--</thead>--%>
-        <%--<tbody>--%>
-        <%--<tr>--%>
-            <%--<c:forEach var="photo" items="${chosenStrPhotos}">--%>
-                <%--<td class="photoHolder col-sm-6">--%>
-                    <%--<img src="${photo}" style="width: 100%;"/>--%>
-                <%--</td>--%>
-            <%--</c:forEach>--%>
-            <%--<td class="" style="width: 375px;">--%>
-                <%--<div class="btn-group btn-flex" style="width: 100%;">--%>
-                    <%--<select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">--%>
-                        <%--<c:forEach var="violation" items="${rusViolations}">--%>
-                            <%--<option value=""><c:out value="${violation}"></c:out></option>--%>
-                        <%--</c:forEach>--%>
-                    <%--</select>--%>
-                <%--</div>--%>
-            <%--</td>--%>
-            <%--<td style="width: 240px;">--%>
-                <%--<div class="btn-group btn-flex" style="width: inherit;">--%>
-                    <%--<select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">--%>
-                        <%--<c:forEach var="action" items="${rusActions}">--%>
-                            <%--<option value=""><c:out value="${action}"></c:out></option>--%>
-                        <%--</c:forEach>--%>
-                    <%--</select>--%>
-                <%--</div>--%>
-            <%--</td>--%>
-            <%--<td class="comment"><c:out value="${chosenTicket.comment}"/></td>--%>
-        <%--</tr>--%>
-        <%--</tbody>--%>
-    <%--</table>--%>
         <div class="row well" id="gallery">
             <div class="">
                 <div class="w3-content" style="max-width: 800px">
                     <c:forEach var="photo" items="${chosenStrPhotos}">
                         <img class="mySlides" src="${photo}" style="width: 100%;">
                     </c:forEach>
-                    <%--<img class="mySlides" src="img_nature_wide.jpg" style="width:100%">--%>
-                    <%--<img class="mySlides" src="img_fjords_wide.jpg" style="width:100%">--%>
-                    <%--<img class="mySlides" src="img_mountains_wide.jpg" style="width:100%">--%>
                 </div>
                 <div class="w3-center">
                     <div class="w3-section">
-                        <button class="w3-btn" onclick="plusDivs(-1)">❮ Назад</button>
-                        <button class="w3-btn" onclick="plusDivs(1)">Далее ❯</button>
+                        <button class="btn btn-warning" onclick="plusDivs(-1)">❮ Назад</button>
+                        <button class="btn btn-warning" onclick="plusDivs(1)">Далее ❯</button>
                     </div>
                     <c:forEach var="i" end="${chosenStrPhotos.size()}" step="1" begin="1">
-                        <button class="w3-btn demo" onclick="currentDiv(i)">${i}</button>
+                        <button class="btn demo" onclick="currentDiv(i)">${i}</button>
                     </c:forEach>
-                    <%--<button class="w3-btn demo" onclick="currentDiv(1)">1</button>--%>
-                    <%--<button class="w3-btn demo" onclick="currentDiv(2)">2</button>--%>
-                    <%--<button class="w3-btn demo" onclick="currentDiv(3)">3</button>--%>
                 </div>
             </div>
         </div>
@@ -227,10 +205,14 @@
         </div>
         <div class="row well" id="controls">
             <div class="btn-group btn-flex">
-                <button id type="button" class="btn btn-info btnProcess">Обработать заявку</button>
+                <button id="btnUpdate" type="button" class="btn btn-info btnProcess">Обработать заявку</button>
                 <button id type="button" class="btn btn-danger btnDecline">Отклонить заявку</button>
             </div>
         </div>
+        <form:form id="updateForm" action="/updateTicket" method="post" modelAttribute="ticket">
+            <input type="hidden" id="idPlace" name="curId" value=""/>
+            <input type="hidden" id="violPlace" name="curViol" value=""/>
+        </form:form>
     </div>
 </body>
 </html>
