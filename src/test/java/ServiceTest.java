@@ -53,6 +53,36 @@ public class ServiceTest {
     }
 
 //    @Test
+//    public void photoInsertTest() throws IOException {
+//
+//        Ticket ticket = ticketService.getById(3l);
+//
+//        Photo photo1 = new Photo();
+//        BufferedImage originalImage1 = ImageIO.read(new File(
+//                    "C://Users//Pavel//Desktop//photos//2.png"));
+//        photo1.setPhoto(Photo.getByteArrayPhoto(originalImage1));
+//
+//        Photo photo2 = new Photo();
+//        BufferedImage originalImage2 = ImageIO.read(new File(
+//                "C://Users//Pavel//Desktop//photos//nepravilnaya-parkovka-vo-dvorah.png"));
+//        photo2.setPhoto(Photo.getByteArrayPhoto(originalImage2));
+//
+//        Set<Photo> photoSet = new HashSet<>();
+//        photoSet.add(photo1);
+//        photoSet.add(photo2);
+//
+//        ticket.setViolationPhotos(photoSet);
+//
+////        BufferedImage img = Photo.getBufferedImagePhoto(ticket.getViolationPhotos().iterator().next().getPhoto());
+//
+////        ImageIO.write(img, "png", new File(
+////                "pic_viol.png"));
+//
+//        ticketService.save(ticket);
+//
+//    }
+
+//    @Test
 //    public void ticketInsertTest() throws IOException {
 //
 //

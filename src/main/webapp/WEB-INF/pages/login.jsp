@@ -11,8 +11,13 @@
 
 	<body>
 		<div id="mainWrapper">
-			<div class="login-container">
+			<div class="login-container" style="border-radius: 10px;">
 				<div class="login-card">
+					<div>
+						<h3>Добро пожаловать в систему регистрации заявлений о неправильной парковке транспортных средств.</h3>
+						<br>
+						<h4>Для продолжения работы с системой необходимо авторизоваться:</h4>
+					</div>
 					<div class="login-form">
 						<c:url var="loginUrl" value="/login" />
 						<form action="${loginUrl}" method="post" class="form-horizontal">

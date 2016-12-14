@@ -81,7 +81,6 @@ public class MainController {
             @RequestParam(value = "logout", required = false) String logout) {
 
 
-
         ModelAndView model = new ModelAndView();
         if (error != null) {
             model.addObject("error", "Неверное имя пользователя или пароль!");
@@ -106,16 +105,11 @@ public class MainController {
         List<Ticket> archivedTickets = new ArrayList<>();
 
         for (Ticket t : allTickets) {
-            if(t.getType() == TicketEnum.NOT_PROCESSED)
-            {
+            if (t.getType() == TicketEnum.NOT_PROCESSED) {
                 inputTickets.add(t);
-            }
-            else if(t.getType() == TicketEnum.PROCESSED)
-            {
+            } else if (t.getType() == TicketEnum.PROCESSED) {
                 processedTickets.add(t);
-            }
-            else
-            {
+            } else {
                 archivedTickets.add(t);
             }
         }
@@ -134,9 +128,9 @@ public class MainController {
         model.addObject("rusActions", rusActions);
         model.addObject("violations", violations);
         model.addObject("rusViolations", rusViolations);
-        model.addObject("inputTickets",inputTickets);
-        model.addObject("processedTickets",processedTickets);
-        model.addObject("archivedTickets",archivedTickets);
+        model.addObject("inputTickets", inputTickets);
+        model.addObject("processedTickets", processedTickets);
+        model.addObject("archivedTickets", archivedTickets);
         model.setViewName("app");
 
         return model;
@@ -144,7 +138,7 @@ public class MainController {
     }
 
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
-    public ModelAndView ticketPage(@PathVariable("id")long id) throws UnsupportedEncodingException {
+    public ModelAndView ticketPage(@PathVariable("id") long id) throws UnsupportedEncodingException {
         Ticket chosenTicket = ticketService.getById(id);
         PhotoConverter photoConverter = new PhotoConverter();
         List<String> rusViolations = ViolationEnum.getRusViolationsList();
@@ -152,8 +146,7 @@ public class MainController {
         List<String> rusActions = ActionEnum.getRusActionList();
 
         List<String> chosenStrPhotos = new ArrayList<>();
-        for (Photo p : chosenTicket.getViolationPhotos())
-        {
+        for (Photo p : chosenTicket.getViolationPhotos()) {
             byte[] encodeBase64 = Base64.encodeBase64(p.getPhoto());
             String base64Encoded = new String(encodeBase64, "UTF-8");
 
@@ -176,7 +169,8 @@ public class MainController {
     }
 
     @RequestMapping(value = "/updateTicket", method = RequestMethod.POST)
-    public ModelAndView updateTicket(@RequestParam(value = "curViol")String curViol, @RequestParam(value = "curId")long curId) {
+    public ModelAndView updateTicket(@RequestParam(value = "curViol") String curViol, @RequestParam(value = "curId") long curId,
+                                     @RequestParam("arr") List<ActionEnum> actions) {
         ModelAndView model = new ModelAndView();
 
         Ticket newTicket = ticketService.getById(curId);

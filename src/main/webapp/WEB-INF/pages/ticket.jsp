@@ -62,16 +62,27 @@
             $("#btnUpdate").click(function () {
                 var curViol = $("#violPick").val();
                 var curId = ${chosenTicket.id};
-                var curActions;
-//                alert(curId);
-//                var posting = $.post("/updateTicket", {"curViol": curViol}, {"curId": curId});
-//                posting.done(function () {
-//                    alert(curViol);
-//                });
+                var curActions = "";
+
+                var dropDownElem = document.getElementById("aPick");
+                var selectedValues = new Array();
+                var dropDownLength = dropDownElem.length;
+
+                for ( var i=0; i < dropDownLength; i++ )
+                {
+                    if ( dropDownElem.options[i].selected )
+                    {
+//                        selectedValues.push( dropDownElem.options[i].value );
+                        document.getElementById("action" + i).value = dropDownElem.options[i];
+                    }
+                }
+
+//                alert ( selectedValues.toString() );
+
                 document.getElementById("idPlace").value = curId;
                 document.getElementById("violPlace").value = curViol;
                 document.getElementById("updateForm").submit();
-//                alert(document.getElementById("idPlace").value);
+                alert(document.getElementById("idPlace").value);
             });
         });
 
@@ -160,6 +171,9 @@
                         <div class="btn-group btn-flex" style="width: 100%;">
                             <select id ="violPick" class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
                                 <c:forEach var="violation" items="${violations}">
+                                    <c:if test="${violation.toString() == chosenTicket.violation.type.toString()}">
+                                        <option selected value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
+                                    </c:if>
                                     <option value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
                                 </c:forEach>
                             </select>
@@ -167,9 +181,9 @@
                     </td>
                     <td class="col-md-3 cell">
                         <div class="btn-group btn-flex" style="width: 100%;">
-                            <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
+                            <select id="aPick" class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                 <c:forEach var="action" items="${rusActions}">
-                                    <option value=""><c:out value="${action}"></c:out></option>
+                                    <option value="${action}"><c:out value="${action}"></c:out></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -192,7 +206,7 @@
                         <button class="btn btn-warning" onclick="plusDivs(1)">Далее ❯</button>
                     </div>
                     <c:forEach var="i" end="${chosenStrPhotos.size()}" step="1" begin="1">
-                        <button class="btn demo" onclick="currentDiv(i)">${i}</button>
+                        <button class="btn demo" onclick="currentDiv(${i})">${i}</button>
                     </c:forEach>
                 </div>
             </div>
@@ -212,6 +226,9 @@
         <form:form id="updateForm" action="/updateTicket" method="post" modelAttribute="ticket">
             <input type="hidden" id="idPlace" name="curId" value=""/>
             <input type="hidden" id="violPlace" name="curViol" value=""/>
+            <c:forEach var="i" begin="1" end="3" >
+                <input type="hidden" id="action${i}" name="curAction" value=""/>
+            </c:forEach>
         </form:form>
     </div>
 </body>
