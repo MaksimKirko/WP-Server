@@ -90,13 +90,13 @@ public class ServiceTest {
 //        Ticket ticket = new Ticket();
 //        ticket.setType(TicketEnum.NOT_PROCESSED);
 //        ticket.setDate(new Date());
-//        ticket.setAddress("ул. Кирова, 32");
+//        ticket.setAddress("ул. Кирова, 33");
 //        ticket.setLocation("53.678409, 23.837026");
-//        ticket.setLicensePlate("LP 1234");
+//        ticket.setLicensePlate("4357 PK-3");
 //
 //
-//        Violation violation = violationService.getById(1l);
-//        Action action = actionService.getById(1l);
+//        Violation violation = violationService.getById(8l);
+//        Action action = actionService.getById(3l);
 //
 //        Set<Action> actions = new HashSet<Action>();
 //        actions.add(action);
@@ -108,7 +108,7 @@ public class ServiceTest {
 //        Photo photo = new Photo();
 //
 //        BufferedImage originalImage = ImageIO.read(new File(
-//                "pics//images.jpg"));
+//                "pics//2.png"));
 //
 //        photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
 //        photo.setTicket(ticket);

@@ -62,7 +62,6 @@
             $("#btnUpdate").click(function () {
                 var curViol = $("#violPick").val();
                 var curId = ${chosenTicket.id};
-                var curActions = "";
 
                 var dropDownElem = document.getElementById("aPick");
                 var selectedValues = new Array();
@@ -72,20 +71,45 @@
                 {
                     if ( dropDownElem.options[i].selected )
                     {
-//                        selectedValues.push( dropDownElem.options[i].value );
-                        document.getElementById("action" + i).value = dropDownElem.options[i];
+                        selectedValues.push( dropDownElem.options[i].value );
                     }
                 }
 
-//                alert ( selectedValues.toString() );
+                for(var i=0; i < selectedValues.length; i++)
+                {
+                    var input = document.createElement("input");
+                    input.setAttribute("type", "hidden");
+                    input.setAttribute("name", "actions");
+                    input.setAttribute("value", selectedValues[i]);
 
-                document.getElementById("idPlace").value = curId;
+                    document.getElementById("updateForm").appendChild(input);
+                }
+
+                document.getElementById("updateId").value = curId;
                 document.getElementById("violPlace").value = curViol;
                 document.getElementById("updateForm").submit();
-                alert(document.getElementById("idPlace").value);
             });
         });
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#btnDecline").click(function () {
+                var curId = ${chosenTicket.id};
+
+                document.getElementById("declineId").value = curId;
+                document.getElementById("declineForm").submit();
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+           $("#locBtn").click(function () {
+               var url = "${locProv.getLocationURL(chosenTicket.location)}";
+               var win = window.open(url, '_blank');
+               win.focus();
+           });
+        });
     </script>
 
     <style>
@@ -162,7 +186,11 @@
                 <tr>
                     <td class="col-md-3 cell"><c:out value="Заявка №${chosenTicket.id}"/></td>
                     <td class="col-md-3 cell"><c:out value="${chosenTicket.violation.type}"/></td>
-                    <td class="col-md-3 cell"><c:out value="${chosenTicket.location}"/></td>
+                    <td class="col-md-3 cell">
+                        <button id="locBtn" class="btn btn-info">Показать место на карте
+                            <%--<a href="<c:out value="${locProv.getLocationURL(chosenTicket.location)}"/>" class="btn btn-info btn-group" target="_blank">Показать место на карте</a>--%>
+                        </button>
+                    </td>
                     <td class="col-md-3 cell"><c:out value="${dateFormat.format(chosenTicket.date)}"/></td>
                 </tr>
                 <tr>
@@ -174,7 +202,9 @@
                                     <c:if test="${violation.toString() == chosenTicket.violation.type.toString()}">
                                         <option selected value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
                                     </c:if>
-                                    <option value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
+                                    <c:if test="${violation.toString() != chosenTicket.violation.type.toString()}">
+                                        <option value="${violation.toString()}"><c:out value="${violation.toString()}"></c:out></option>
+                                    </c:if>
                                 </c:forEach>
                             </select>
                         </div>
@@ -182,8 +212,8 @@
                     <td class="col-md-3 cell">
                         <div class="btn-group btn-flex" style="width: 100%;">
                             <select id="aPick" class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
-                                <c:forEach var="action" items="${rusActions}">
-                                    <option value="${action}"><c:out value="${action}"></c:out></option>
+                                <c:forEach var="action" items="${actions}">
+                                    <option value="${action.toString()}"><c:out value="${action.toString()}"></c:out></option>
                                 </c:forEach>
                             </select>
                         </div>
@@ -220,15 +250,18 @@
         <div class="row well" id="controls">
             <div class="btn-group btn-flex">
                 <button id="btnUpdate" type="button" class="btn btn-info btnProcess">Обработать заявку</button>
-                <button id type="button" class="btn btn-danger btnDecline">Отклонить заявку</button>
+                <button id="btnDecline" type="button" class="btn btn-danger btnDecline">Отклонить заявку</button>
             </div>
         </div>
-        <form:form id="updateForm" action="/updateTicket" method="post" modelAttribute="ticket">
-            <input type="hidden" id="idPlace" name="curId" value=""/>
+        <form:form id="updateForm" action="/updateTicket" method="post">
+            <input type="hidden" id="updateId" name="curId" value=""/>
             <input type="hidden" id="violPlace" name="curViol" value=""/>
-            <c:forEach var="i" begin="1" end="3" >
-                <input type="hidden" id="action${i}" name="curAction" value=""/>
-            </c:forEach>
+
+            <%--new inputs go here--%>
+
+        </form:form>
+        <form:form id="declineForm" action="/archiveTicket" method="post">
+            <input type="hidden" id="declineId" name="curId" value=""/>
         </form:form>
     </div>
 </body>

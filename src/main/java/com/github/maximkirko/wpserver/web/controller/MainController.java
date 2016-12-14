@@ -4,14 +4,13 @@ import com.github.maximkirko.wpserver.datamodel.Photo;
 import com.github.maximkirko.wpserver.datamodel.Role;
 import com.github.maximkirko.wpserver.datamodel.Ticket;
 import com.github.maximkirko.wpserver.datamodel.TicketEnum;
+import com.github.maximkirko.wpserver.datamodel.action.Action;
 import com.github.maximkirko.wpserver.datamodel.action.ActionEnum;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 import com.github.maximkirko.wpserver.datamodel.violation.ViolationEnum;
-import com.github.maximkirko.wpserver.service.api.IRoleService;
-import com.github.maximkirko.wpserver.service.api.ITicketService;
-import com.github.maximkirko.wpserver.service.api.IUserService;
-import com.github.maximkirko.wpserver.service.api.IViolationService;
+import com.github.maximkirko.wpserver.service.api.*;
 import com.github.maximkirko.wpserver.service.impl.TicketServiceImpl;
+import com.github.maximkirko.wpserver.util.LocationProvider;
 import com.github.maximkirko.wpserver.util.PhotoConverter;
 import org.apache.commons.codec.binary.Base64;
 import org.aspectj.weaver.ast.Var;
@@ -32,8 +31,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Stream;
 
 /**
@@ -53,6 +51,9 @@ public class MainController {
 
     @Autowired
     private IViolationService violationService;
+
+    @Autowired
+    private IActionService actionService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView welcomePage() {
@@ -143,7 +144,8 @@ public class MainController {
         PhotoConverter photoConverter = new PhotoConverter();
         List<String> rusViolations = ViolationEnum.getRusViolationsList();
         List<ViolationEnum> violations = ViolationEnum.getViolations();
-        List<String> rusActions = ActionEnum.getRusActionList();
+        List<ActionEnum> actions = ActionEnum.getActions();
+        LocationProvider locationProvider = new LocationProvider();
 
         List<String> chosenStrPhotos = new ArrayList<>();
         for (Photo p : chosenTicket.getViolationPhotos()) {
@@ -157,9 +159,10 @@ public class MainController {
 
         ModelAndView model = new ModelAndView();
 
+        model.addObject("locProv", locationProvider);
         model.addObject("dateFormat", dateFormat);
         model.addObject("photoConverter", photoConverter);
-        model.addObject("rusActions", rusActions);
+        model.addObject("actions", actions);
         model.addObject("violations", violations);
         model.addObject("rusViolations", rusViolations);
         model.addObject("chosenStrPhotos", chosenStrPhotos);
@@ -170,16 +173,42 @@ public class MainController {
 
     @RequestMapping(value = "/updateTicket", method = RequestMethod.POST)
     public ModelAndView updateTicket(@RequestParam(value = "curViol") String curViol, @RequestParam(value = "curId") long curId,
-                                     @RequestParam("arr") List<ActionEnum> actions) {
+                                     @RequestParam(value = "actions") String[] actions) {
         ModelAndView model = new ModelAndView();
 
         Ticket newTicket = ticketService.getById(curId);
 
         Violation v = violationService.getByType(ViolationEnum.getViolation(curViol));
 
+//        System.out.println();
+//        for (String s: actions) {
+//            System.out.println(s);
+//        }
+        Set<Action> newActions = new HashSet<Action>();
+
+        for (String action: actions) {
+            Action act = actionService.getByType(ActionEnum.getAction(action));
+            System.out.println();
+            System.out.println(act.toString());
+            newActions.add(act);
+        }
+
+        newTicket.setActions(newActions);
         newTicket.setViolation(v);
         newTicket.setType(TicketEnum.PROCESSED);
         ticketService.save(newTicket);
+        model.setViewName("redirect:/app");
+        return model;
+    }
+
+    @RequestMapping(value = "/archiveTicket", method = RequestMethod.POST)
+    public ModelAndView archiveTicket(@RequestParam(value = "curId") long curId) {
+        ModelAndView model = new ModelAndView();
+
+        Ticket ticket = ticketService.getById(curId);
+        ticket.setType(TicketEnum.ARCHIVE);
+        ticketService.save(ticket);
+
         model.setViewName("redirect:/app");
         return model;
     }
