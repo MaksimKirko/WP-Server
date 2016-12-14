@@ -1,5 +1,6 @@
 package com.github.maximkirko.wpserver.datamodel;
 
+import com.github.maximkirko.wpserver.datamodel.action.Action;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -26,11 +27,7 @@ public class Ticket {
     @Enumerated(EnumType.STRING)
     private TicketEnum type;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "ticket_2_photo", joinColumns = {
-            @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "photo_id",
-                    nullable = false, updatable = false)})
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "ticket", cascade = CascadeType.ALL)
     private Set<Photo> violationPhotos;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -52,6 +49,12 @@ public class Ticket {
     @Column(name = "comment", length = 512)
     private String comment;
 
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "ticket_2_action", joinColumns = {
+            @JoinColumn(name = "ticket_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "action_id",
+                    nullable = false, updatable = false)})
+    private Set<Action> actions;
 
     public Long getId() {
         return id;
@@ -123,6 +126,14 @@ public class Ticket {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Set<Action> getActions() {
+        return actions;
+    }
+
+    public void setActions(Set<Action> actions) {
+        this.actions = actions;
     }
 
     @Override

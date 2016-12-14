@@ -33,16 +33,8 @@ public class Violation {
     @Column(name = "fee", nullable = false)
     private double fee;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "violation_2_action", joinColumns = {
-            @JoinColumn(name = "violation_id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "action_id",
-                    nullable = false, updatable = false)})
-    private Set<Action> actions;
-
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "violation")
     private Set<Ticket> tickets;
-
 
     public Long getId() {
         return id;
@@ -74,14 +66,6 @@ public class Violation {
 
     public void setFee(double fee) {
         this.fee = fee;
-    }
-
-    public Set<Action> getActions() {
-        return actions;
-    }
-
-    public void setActions(Set<Action> actions) {
-        this.actions = actions;
     }
 
     public Set<Ticket> getTickets() {

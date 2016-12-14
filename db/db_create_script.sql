@@ -2,9 +2,9 @@ CREATE TABLE "ticket" (
   "id" serial NOT NULL,
   "type" character varying(128) NOT NULL,
   "violation_id" bigint,
-  "license_plate" character varying(128),
-  "address" character varying(256),
-  "location" character varying(128) NOT NULL,
+  "license_plate" character varying(128) NOT NULL,
+  "address" character varying(256) NOT NULL,
+  "location" character varying(128),
   "date" TIMESTAMP NOT NULL,
   "comment" character varying(1024),
   CONSTRAINT ticket_pk PRIMARY KEY ("id")
@@ -40,17 +40,8 @@ OIDS=FALSE
 CREATE TABLE "photo" (
   "id" serial NOT NULL,
   "photo" bytea NOT NULL,
-  CONSTRAINT photo_pk PRIMARY KEY ("id")
-) WITH (
-OIDS=FALSE
-);
-
-
-
-CREATE TABLE "ticket_2_photo" (
   "ticket_id" bigint NOT NULL,
-  "photo_id" bigint NOT NULL,
-  CONSTRAINT ticket_2_photo_pk PRIMARY KEY ("ticket_id","photo_id")
+  CONSTRAINT photo_pk PRIMARY KEY ("id")
 ) WITH (
 OIDS=FALSE
 );
@@ -73,8 +64,8 @@ OIDS=FALSE
 
 
 
-CREATE TABLE "violation_2_action" (
-  "violation_id" bigint NOT NULL,
+CREATE TABLE "ticket_2_action" (
+  "ticket_id" bigint NOT NULL,
   "action_id" bigint NOT NULL
 ) WITH (
 OIDS=FALSE
@@ -96,14 +87,13 @@ ALTER TABLE "ticket" ADD CONSTRAINT "ticket_fk0" FOREIGN KEY ("violation_id") RE
 
 
 
-
-ALTER TABLE "ticket_2_photo" ADD CONSTRAINT "ticket_2_photo_fk0" FOREIGN KEY ("ticket_id") REFERENCES "ticket"("id");
-ALTER TABLE "ticket_2_photo" ADD CONSTRAINT "ticket_2_photo_fk1" FOREIGN KEY ("photo_id") REFERENCES "photo"("id");
+ALTER TABLE "photo" ADD CONSTRAINT "photo_fk0" FOREIGN KEY ("ticket_id") REFERENCES "ticket"("id");
 
 ALTER TABLE "user" ADD CONSTRAINT "user_fk0" FOREIGN KEY ("role_id") REFERENCES "role"("id");
 
-ALTER TABLE "violation_2_action" ADD CONSTRAINT "violation_2_action_fk0" FOREIGN KEY ("violation_id") REFERENCES "violation"("id");
-ALTER TABLE "violation_2_action" ADD CONSTRAINT "violation_2_action_fk1" FOREIGN KEY ("action_id") REFERENCES "action"("id");
+ALTER TABLE "ticket_2_action" ADD CONSTRAINT "ticket_2_action_fk0" FOREIGN KEY ("ticket_id") REFERENCES "ticket"("id");
+ALTER TABLE "ticket_2_action" ADD CONSTRAINT "ticket_2_action_fk1" FOREIGN KEY ("action_id") REFERENCES "action"("id");
+
 
 
 -- TABLES FILLING --

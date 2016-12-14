@@ -11,8 +11,7 @@ import java.io.OutputStreamWriter;
 
 @WebServlet("/ClientInteractionServlet")
 public class ClientInteractionServlet extends HttpServlet {
-    private static final long serialVersionUID = 1L;
- 
+
     public ClientInteractionServlet() {
         super();
  
@@ -21,7 +20,7 @@ public class ClientInteractionServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
  
         response.getOutputStream().println("Hurray !! This Servlet Works");
- 
+
     }
  
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +39,7 @@ public class ClientInteractionServlet extends HttpServlet {
             response.setStatus(HttpServletResponse.SC_OK);
             OutputStreamWriter writer = new OutputStreamWriter(response.getOutputStream());
  
-            String resp = "THIS SHIT SI ALSO WORKS!";
+            String resp = "resp";
 
             writer.write(resp);
             writer.flush();

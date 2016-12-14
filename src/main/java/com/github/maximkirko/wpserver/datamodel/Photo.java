@@ -29,9 +29,9 @@ public class Photo {
     @Column(name = "photo", unique = true, nullable = false)
     private byte[] photo;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "violationPhotos")
-    private Set<Ticket> tickets;
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ticket_id", nullable = false, updatable = false)
+    private Ticket ticket;
 
     public Long getId() {
         return id;
@@ -49,12 +49,12 @@ public class Photo {
         this.photo = photo;
     }
 
-    public Set<Ticket> getTickets() {
-        return tickets;
+    public Ticket getTicket() {
+        return ticket;
     }
 
-    public void setTickets(Set<Ticket> tickets) {
-        this.tickets = tickets;
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     @Override

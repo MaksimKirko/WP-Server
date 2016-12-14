@@ -1,10 +1,12 @@
 package com.github.maximkirko.wpserver.datamodel.action;
 
+import com.github.maximkirko.wpserver.datamodel.Ticket;
 import com.github.maximkirko.wpserver.datamodel.violation.Violation;
 
 import javax.persistence.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -26,12 +28,11 @@ public class Action {
     @Enumerated(EnumType.STRING)
     private ActionEnum type;
 
-    @Column(name = "description", nullable = false, length = 512)
+    @Column(name = "description", nullable = false, length = 1024)
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "actions", cascade = CascadeType.ALL)
-    private List<Violation> violations;
-
+    private Set<Ticket> tickets;
 
     public Long getId() {
         return id;
@@ -57,12 +58,12 @@ public class Action {
         this.description = description;
     }
 
-    public List<Violation> getViolations() {
-        return violations;
+    public Set<Ticket> getTickets() {
+        return tickets;
     }
 
-    public void setViolations(List<Violation> violations) {
-        this.violations = violations;
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
     }
 
     @Override
@@ -75,10 +76,6 @@ public class Action {
     }
 
     public Action() {
-
-    }
-
-    public void performAction() {
 
     }
 }
