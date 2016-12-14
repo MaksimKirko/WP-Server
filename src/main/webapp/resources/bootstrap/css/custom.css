@@ -17,3 +17,64 @@
     margin: 8px;
     margin-left: 0px;
 }
+
+.photoHolder {
+
+}
+#user {
+    border: 4px;
+    border-radius: 3px;
+    border: #d58512;
+    margin-left: 850px;
+}
+#controls {
+    align-content: left;
+}
+.filter-option {
+    color: white;
+}
+.violationPick {
+    width: 350px;
+    /*color: white;*/
+}
+select[title]{
+    /*color: white;*/
+}
+body{
+    padding:50px;
+}
+.btn-group {
+    white-space: nowrap;
+    width: 250px;
+}
+
+.btn-flex {
+    display: flex;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.btn-flex .btn:first-child {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.btn-group .btn {
+    float: none;
+    display: inline-block;
+}
+.btn + .dropdown-toggle {
+    margin-left: -4px;
+}
+
+.bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
+    width: 100%;
+}
+
+.table-responsive {
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+}
+.cell {
+    text-align: -webkit-center;
+}

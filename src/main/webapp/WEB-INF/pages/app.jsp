@@ -23,8 +23,10 @@
     <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/custom.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-select.css" />" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.6/jq-2.2.3/dt-1.10.12/b-1.2.2/datatables.min.css"/>
 
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.6/jq-2.2.3/dt-1.10.12/b-1.2.2/datatables.min.js"></script>
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <%--<script src="<c:url value="/resources/js/bootstrap.min.js" />"></script>--%>
     <script src="<c:url value="/resources/js/bootstrap-select.js" />"></script>
@@ -32,12 +34,24 @@
         $('.selectpicker').selectpicker({
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#iTickets').DataTable();
+            $('#hTickets').DataTable();
+            $('#aTickets').DataTable();
+        } );
+    </script>
 
     <title>Application</title>
 
     <style>
         #user {
-            margin-left: 750px;
+            background-color: lavender;
+            width: 230px;
+            border: 4px;
+            border-radius: 10px;
+            border: #d58512;
+            margin-left: 1050px;
         }
         #controls {
             align-content: left;
@@ -80,7 +94,12 @@
         }
 
         .bootstrap-select:not([class*="col-"]):not([class*="form-control"]):not(.input-group-btn) {
-            width: 250px;
+            width: 100%;
+        }
+
+        .tab-content {
+            background-color: white;
+            border-top: transparent;
         }
 
         .table-responsive {
@@ -89,9 +108,9 @@
         }
     </style>
 </head>
-<body>
-    <div class="container">
-            <c:url value="/j_spring_security_logout" var="logoutUrl" />
+<body style="padding: 20px;" class="well">
+    <div class="container" style="width: 100%; padding: 0px; margin: 0px;">
+            <c:url value="/logout" var="logoutUrl" />
 
             <!-- csrf for log out-->
             <form action="${logoutUrl}" method="post" id="logoutForm">
@@ -107,7 +126,7 @@
             </script>
 
             <c:if test="${pageContext.request.userPrincipal.name != null}">
-                <div id="user">
+                <div id="user" class="well">
                     Здравствуйте, ${pageContext.request.userPrincipal.name} | <a
                         href="javascript:formSubmit()">Выйти</a>
                 </div>
@@ -123,9 +142,9 @@
                 <a href="#archivedTickets" data-toggle="tab" >Архив заявок</a>
             </li>
         </ul>
-        <div class="tab-content table-responsive">
+        <div class="tab-content table-responsive well">
             <div class="tab-pane active" id="inputTickets">
-                <table class="table table-striped table-bordered table-hover" style="">
+                <table id="iTickets" class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
                         <th class="id">ID</th>
@@ -133,79 +152,19 @@
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
+                        <th class="">Заявка...</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${inputTickets}" var="item">
-                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
-                            aria-expanded="false">
-
+                        <tr>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violation"></td>
+                            <td class="violation"><c:out value="${item.violation.type}"/></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
-                            <td class="date"><c:out value="${item.date}"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" class="hiddenRow">
-                                <div class="accordion-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="">Фото №1</th>
-                                            <th class="">Фото №2</th>
-                                            <th class="">Фото №3</th>
-                                            <th class="">Вид нарушения</th>
-                                            <th class="">Действия</th>
-                                            <th class="">Комментарий</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">
-                                                <div class="btn-group btn-flex" style="width: 250px;">
-                                                    <select class="selectpicker violationPick" title="Выберите нарушение" data-style="btn-info">
-                                                        <c:forEach var="violation" items="${rusViolations}">
-                                                            <option value=""><c:out value="${violation}"></c:out></option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="btn-group btn-flex">
-                                                    <select class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
-                                                        <c:forEach var="action" items="${rusActions}">
-                                                            <option value=""><c:out value="${action}"></c:out></option>
-                                                        </c:forEach>
-                                                    </select>
-                                                </div>
-                                            </td>
-                                            <td class=""></td>
-
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div id="controls">
-                                        <div class="btn-group btn-flex">
-                                            <button type="button" class="btn btn-info">Action</button>
-                                            <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                <span class="caret"></span>
-                                                <span class="sr-only">Toggle Dropdown</span>
-                                            </button>
-                                            <ul class="dropdown-menu pull-right">
-                                                <li><a href="#">Action</a></li>
-                                                <li><a href="#">Another action</a></li>
-                                                <li><a href="#">Something else here</a></li>
-                                                <li role="separator" class="divider"></li>
-                                                <li><a href="#">Separated link</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
+                            <td class="date"><c:out value="${dateFormat.format(item.date)}"/></td>
+                            <td class="">
+                                <a href="<c:url value="/ticket/${item.id}"/>" type="button" class="btn btn-info">Просмотреть заявку</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -213,7 +172,7 @@
                 </table>
             </div>
             <div class="tab-pane" id="handledTickets">
-                <table class="table table-striped table-bordered table-hover" style="">
+                <table id="hTickets" class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
                         <th class="id">ID</th>
@@ -221,85 +180,19 @@
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
+                        <th class="">Заявка...</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <c:forEach items="${handledTickets}" var="item">
-                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
-                            aria-expanded="false">
-
+                    <c:forEach items="${processedTickets}" var="item">
+                        <tr>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violation">...</td>
+                            <td class="violation"><c:out value="${item.violation.type}"/></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" class="hiddenRow">
-                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="">Фото №1</th>
-                                            <th class="">Фото №2</th>
-                                            <th class="">Фото №3</th>
-                                            <th class="">Вид нарушения</th>
-                                            <th class="">Комментарий</th>
-                                            <th class="">Действия</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger">Action</button>
-                                                    <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown"> <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a>
-                                                        </li>
-                                                        <li><a href="#">Another action</a>
-                                                        </li>
-                                                        <li><a href="#">Something else here</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td class=""></td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger">Action</button>
-                                                    <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a>
-                                                        </li>
-                                                        <li><a href="#">Another action</a>
-                                                        </li>
-                                                        <li><a href="#">Something else here</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <td class="">
+                                <a href="<c:url value="/ticket/${item.id}"/>" type="button" class="btn btn-info">Просмотреть заявку</a>
                             </td>
                         </tr>
                     </c:forEach>
@@ -307,7 +200,7 @@
                 </table>
             </div>
             <div class="tab-pane" id="archivedTickets">
-                <table class="table table-striped table-bordered table-hover" style="">
+                <table id="aTickets" class="table table-striped table-bordered table-hover" style="">
                     <thead>
                     <tr>
                         <th class="id">ID</th>
@@ -315,85 +208,19 @@
                         <th class="">Номерной знак</th>
                         <th class="">Адрес места нарушения</th>
                         <th class="">Дата</th>
+                        <th class="">Заявка...</th>
                     </tr>
                     </thead>
                     <tbody>
                     <c:forEach items="${archivedTickets}" var="item">
-                        <tr data-toggle="collapse" data-target="#${item.id}" class="accordion-toggle collapsed"
-                            aria-expanded="false">
-
+                        <tr>
                             <td class="id"><c:out value="${item.id}"/></td>
-                            <td class="violation">...</td>
+                            <td class="violation"><c:out value="${item.violation.type}"/></td>
                             <td class="lPlate"><c:out value="${item.licensePlate}"/></td>
                             <td class="address"><c:out value="${item.address}"/></td>
                             <td class="date"><c:out value="${item.date}"/></td>
-                        </tr>
-                        <tr>
-                            <td colspan="12" class="hiddenRow">
-                                <div class="accordian-body collapse" id="${item.id}" aria-expanded="false" style="height: 0px;">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                        <tr>
-                                            <th class="">Фото №1</th>
-                                            <th class="">Фото №2</th>
-                                            <th class="">Фото №3</th>
-                                            <th class="">Вид нарушения</th>
-                                            <th class="">Комментарий</th>
-                                            <th class="">Действия</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">...</td>
-                                            <td class="">
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger">Action</button>
-                                                    <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown"> <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a>
-                                                        </li>
-                                                        <li><a href="#">Another action</a>
-                                                        </li>
-                                                        <li><a href="#">Something else here</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            <td class=""></td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <button type="button" class="btn btn-danger">Action</button>
-                                                    <button type="button" class="btn btn-danger dropdown-toggle"
-                                                            data-toggle="dropdown">
-                                                        <span class="caret"></span>
-                                                        <span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu" role="menu">
-                                                        <li><a href="#">Action</a>
-                                                        </li>
-                                                        <li><a href="#">Another action</a>
-                                                        </li>
-                                                        <li><a href="#">Something else here</a>
-                                                        </li>
-                                                        <li class="divider"></li>
-                                                        <li><a href="#">Separated link</a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                            <td class="">
+                                <a href="<c:url value="/ticket/${item.id}"/>" type="button" class="btn btn-info">Просмотреть заявку</a>
                             </td>
                         </tr>
                     </c:forEach>

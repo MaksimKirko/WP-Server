@@ -5,15 +5,61 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum ViolationEnum {
-    ParkingUnderSign, //143.1
-    ParkingOnCrossing, //143.4
-    ParkingAtBusStop, //143.5
-    ParkingOnBridge, //143.6
-    ParkingNearRailroad, //143.8
-    ParkingOnLeftSide, //143.11
-    ParkingOnWalkway, //143.14
-    ParkingOnGrass, //143.15
-    ParkingNearShop; //143.18
+    ParkingUnderSign ("Парковка в зоне действия запрещающего знака"), //143.1
+    ParkingOnCrossing ("Парковка на перекрестке"), //143.4
+    ParkingAtBusStop ("Парковка на остановке маршрутных т/с"), //143.5
+    ParkingOnBridge ("Парковка на мосту/эстакаде"), //143.6
+    ParkingNearRailroad ("Парковка у/на железнодорожных путях"), //143.8
+    ParkingOnLeftSide ("Парковка ны левой стороне проезжей части"), //143.11
+    ParkingOnWalkway ("Парковка на пешеходной дорожке"), //143.14
+    ParkingOnGrass ("Парковка на газоне"), //143.15
+    ParkingNearShop ("Парковка у дверей магазина"); //143.18
+
+    private final String name;
+
+    private ViolationEnum(String v) {
+        name = v;
+    }
+
+    public boolean equalsName(String otherName) {
+        return (otherName == null) ? false : name.equals(otherName);
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public static ViolationEnum getViolation(String s) {
+
+        for (ViolationEnum en : ViolationEnum.values()) {
+            if(en.toString().equals(s)) {
+                return en;
+            }
+        }
+
+//        switch (s) {
+//            case "Парковка на остановке маршрутных т/с":
+//                return ParkingAtBusStop;
+//            case "Парковка у/на железнодорожных путях":
+//                return ParkingNearRailroad;
+//            case "Парковка у дверей магазина":
+//                return ParkingNearShop;
+//            case "Парковка на мосту/эстакаде":
+//                return ParkingOnBridge;
+//            case "Парковка на перекрестке":
+//                return ParkingOnCrossing;
+//            case "Парковка на газоне":
+//                return ParkingOnGrass;
+//            case "Парковка ны левой стороне проезжей части":
+//                return ParkingOnLeftSide;
+//            case "Парковка на пешеходной дорожке":
+//                return ParkingOnWalkway;
+//            case "Парковка в зоне действия запрещающего знака":
+//                return ParkingUnderSign;
+//        }
+        return null;
+    }
 
 
     public static String getRusViolation(ViolationEnum violationEnum) {
@@ -32,7 +78,7 @@ public enum ViolationEnum {
             case ParkingOnGrass:
                 return "Парковка на газоне";
             case ParkingOnLeftSide:
-                return "Парковка на левой части проезжей части";
+                return "Парковка ны левой стороне проезжей части";
             case ParkingOnWalkway:
                 return "Парковка на пешеходной дорожке";
             case ParkingUnderSign:
@@ -41,6 +87,20 @@ public enum ViolationEnum {
         return "";
     }
 
+    public static List<ViolationEnum> getViolations() {
+        List<ViolationEnum> violations = new ArrayList<>();
+        violations.add(ParkingAtBusStop);
+        violations.add(ParkingNearRailroad);
+        violations.add(ParkingNearShop);
+        violations.add(ParkingOnBridge);
+        violations.add(ParkingOnCrossing);
+        violations.add(ParkingOnGrass);
+        violations.add(ParkingOnLeftSide);
+        violations.add(ParkingOnWalkway);
+        violations.add(ParkingUnderSign);
+
+        return violations;
+    }
     public static List<String> getRusViolationsList() {
         List<String> violations = new ArrayList<>();
 
@@ -50,7 +110,7 @@ public enum ViolationEnum {
         violations.add("Парковка на мосту/эстакаде");
         violations.add("Парковка на перекрестке");
         violations.add("Парковка на газоне");
-        violations.add("Парковка на левой части проезжей части");
+        violations.add("Парковка на левой стороне проезжей части");
         violations.add("Парковка на пешеходной дорожке");
         violations.add("Парковка в зоне действия запрещающего знака");
 
