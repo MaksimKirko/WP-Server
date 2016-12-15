@@ -51,7 +51,8 @@
             border: 4px;
             border-radius: 10px;
             border: #d58512;
-            margin-left: 1050px;
+            margin-right: 10px;
+            margin-left: auto;
         }
         #controls {
             align-content: left;
