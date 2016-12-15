@@ -185,16 +185,10 @@ public class MainController {
 
         Violation v = violationService.getByType(ViolationEnum.getViolation(curViol));
 
-//        System.out.println();
-//        for (String s: actions) {
-//            System.out.println(s);
-//        }
         Set<Action> newActions = new HashSet<Action>();
 
         for (String action: actions) {
             Action act = actionService.getByType(ActionEnum.getAction(action));
-//            System.out.println();
-//            System.out.println(act.toString());
             newActions.add(act);
         }
 

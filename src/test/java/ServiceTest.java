@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -87,38 +88,41 @@ public class ServiceTest {
 //    @Test
 //    public void ticketInsertTest() throws IOException {
 //
-//        Ticket ticket = new Ticket();
-//        ticket.setType(TicketEnum.NOT_PROCESSED);
-//        ticket.setDate(new Date());
-//        ticket.setAddress("ул. Кирова, 33");
-//        ticket.setLocation("53.678409, 23.837026");
-//        ticket.setLicensePlate("4357 PK-3");
+//        for(int i=0; i<27; i++)
+//        {
+//            Ticket ticket = new Ticket();
+//            ticket.setType(TicketEnum.NOT_PROCESSED);
+//            ticket.setDate(new Date());
+//            ticket.setAddress("ул. Горького, " + i );
+//            ticket.setLocation("53.688972, 23.826491");
+//            ticket.setLicensePlate(i + "32 PO-2");
 //
+//            Random rand = new Random();
+//            Violation violation = violationService.getById((long)rand.nextInt(8)+1);
+//            Action action = actionService.getById((long)rand.nextInt(3)+1);
 //
-//        Violation violation = violationService.getById(8l);
-//        Action action = actionService.getById(3l);
+//            Set<Action> actions = new HashSet<Action>();
+//            actions.add(action);
 //
-//        Set<Action> actions = new HashSet<Action>();
-//        actions.add(action);
+//            ticket.setActions(actions);
 //
-//        ticket.setActions(actions);
+//            ticket.setViolation(violation);
 //
-//        ticket.setViolation(violation);
+//            Photo photo = new Photo();
 //
-//        Photo photo = new Photo();
+//            BufferedImage originalImage = ImageIO.read(new File(
+//                    "pics//3.png"));
 //
-//        BufferedImage originalImage = ImageIO.read(new File(
-//                "pics//2.png"));
+//            photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
+//            photo.setTicket(ticket);
 //
-//        photo.setPhoto(Photo.getByteArrayPhoto(originalImage));
-//        photo.setTicket(ticket);
+//            Set<Photo> photoSet = new HashSet<>();
+//            photoSet.add(photo);
 //
-//        Set<Photo> photoSet = new HashSet<>();
-//        photoSet.add(photo);
+//            ticket.setViolationPhotos(photoSet);
 //
-//        ticket.setViolationPhotos(photoSet);
-//
-//        ticketService.save(ticket);
+//            ticketService.save(ticket);
+//        }
 //
 //    }
 
