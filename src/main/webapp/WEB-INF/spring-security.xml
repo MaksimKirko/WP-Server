@@ -9,6 +9,7 @@
 		<intercept-url pattern="/app**" access="hasRole('ADMIN')" />
 		<intercept-url pattern="/home" access="permitAll" />
 		<intercept-url pattern="/" access="permitAll" />
+		<intercept-url pattern="/android" access="permitAll"/>
 		<intercept-url pattern="/admin/**" access="hasRole('ADMIN')" />
 
 		<form-login  login-page="/login"

@@ -10,7 +10,7 @@ public enum ViolationEnum {
     ParkingAtBusStop ("Парковка на остановке маршрутных т/с"), //143.5
     ParkingOnBridge ("Парковка на мосту/эстакаде"), //143.6
     ParkingNearRailroad ("Парковка у/на железнодорожных путях"), //143.8
-    ParkingOnLeftSide ("Парковка ны левой стороне проезжей части"), //143.11
+    ParkingOnLeftSide ("Парковка на левой стороне проезжей части"), //143.11
     ParkingOnWalkway ("Парковка на пешеходной дорожке"), //143.14
     ParkingOnGrass ("Парковка на газоне"), //143.15
     ParkingNearShop ("Парковка у дверей магазина"); //143.18
