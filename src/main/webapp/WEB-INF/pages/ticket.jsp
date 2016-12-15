@@ -1,4 +1,4 @@
-<%@ page import="com.github.maximkirko.wpserver.datamodel.Ticket" %><%--
+<%@ page import="com.github.maximkirko.wpserver.datamodel.TicketEnum" %><%--
   Created by IntelliJ IDEA.
   User: Pavel
   Date: 09.12.2016
@@ -24,8 +24,7 @@
     <script src="<c:url value="/resources/js/bootstrap.js" />"></script>
     <script src="<c:url value="/resources/js/bootstrap-select.js" />"></script>
     <script>
-        $('.selectpicker').selectpicker({
-        });
+        $('.selectpicker').selectpicker({});
     </script>
     <script>
         var slideIndex = 1;
@@ -56,6 +55,30 @@
             x[slideIndex-1].style.display = "block";
             dots[slideIndex-1].className += " w3-red";
         }
+    </script>
+    <script>
+        $(document).ready(function () {
+            if(${chosenTicket.type == ticketProc}||${chosenTicket.type == ticketArch}){
+                document.getElementById("violPick").setAttribute("disabled", "disabled");
+                document.getElementById("aPick").setAttribute("disabled", "disabled");
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            var actionList = document.getElementById("aPick");
+            var listItems = actionList.getElementsByTagName("option");
+
+            for (var i=0; i<${actions.size()}; i++) {
+                for (var j=0; i<${chosenTicket.actions.size()}; j++) {
+                    if(${actions[i].toString() == chosenTicket.actions[j].type.toString()}) {
+                        listItems[i].setAttribute("selected", "selected");
+                        break;
+                    }
+                }
+            }
+
+        });
     </script>
     <script>
         $(document).ready(function () {
@@ -187,9 +210,7 @@
                     <td class="col-md-3 cell"><c:out value="Заявка №${chosenTicket.id}"/></td>
                     <td class="col-md-3 cell"><c:out value="${chosenTicket.violation.type}"/></td>
                     <td class="col-md-3 cell">
-                        <button id="locBtn" class="btn btn-info">Показать место на карте
-                            <%--<a href="<c:out value="${locProv.getLocationURL(chosenTicket.location)}"/>" class="btn btn-info btn-group" target="_blank">Показать место на карте</a>--%>
-                        </button>
+                        <button id="locBtn" class="btn btn-info">Показать место на карте</button>
                     </td>
                     <td class="col-md-3 cell"><c:out value="${dateFormat.format(chosenTicket.date)}"/></td>
                 </tr>
@@ -213,7 +234,7 @@
                         <div class="btn-group btn-flex" style="width: 100%;">
                             <select id="aPick" class="selectpicker actionPick" multiple title="Выберите действие" data-style="btn-info">
                                 <c:forEach var="action" items="${actions}">
-                                    <option value="${action.toString()}"><c:out value="${action.toString()}"></c:out></option>
+                                    <option name="action" value="${action.toString()}"><c:out value="${action.toString()}"></c:out></option>
                                 </c:forEach>
                             </select>
                         </div>

@@ -141,6 +141,9 @@ public class MainController {
     @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
     public ModelAndView ticketPage(@PathVariable("id") long id) throws UnsupportedEncodingException {
         Ticket chosenTicket = ticketService.getById(id);
+        TicketEnum ticketProcessed = TicketEnum.PROCESSED;
+        TicketEnum ticketArchived = TicketEnum.ARCHIVE;
+
         PhotoConverter photoConverter = new PhotoConverter();
         List<String> rusViolations = ViolationEnum.getRusViolationsList();
         List<ViolationEnum> violations = ViolationEnum.getViolations();
@@ -159,6 +162,8 @@ public class MainController {
 
         ModelAndView model = new ModelAndView();
 
+        model.addObject("ticketArch", ticketArchived);
+        model.addObject("ticketProc", ticketProcessed);
         model.addObject("locProv", locationProvider);
         model.addObject("dateFormat", dateFormat);
         model.addObject("photoConverter", photoConverter);
@@ -188,8 +193,8 @@ public class MainController {
 
         for (String action: actions) {
             Action act = actionService.getByType(ActionEnum.getAction(action));
-            System.out.println();
-            System.out.println(act.toString());
+//            System.out.println();
+//            System.out.println(act.toString());
             newActions.add(act);
         }
 
